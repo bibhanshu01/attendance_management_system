@@ -1,0 +1,178 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    
+}
+
+/* .navbar {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+   */
+
+
+   
+
+
+/* nav div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+  
+/* max-width: 800px; */
+
+
+/* header {
+    background-color: #038582;
+    color: #fff;
+    padding: 10px;
+    margin: 0px 800px;
+    
+  }
+  
+  nav ul {
+    list-style: none;
+    text-align: center;
+    margin: 0 auto;
+  }
+  
+  nav li {
+    display: inline-block;
+    margin: 0 10px;
+  }
+  
+  nav a {
+    color: #fff;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  } */
+  
+
+.heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 36px;
+    font-weight: bold;
+    width: 100%;
+    height: 100px;
+    background-color: skyblue;
+    color: black;
+} 
+
+body {
+  background-color: #f2f2f2;
+  font-family: Arial, sans-serif;
+}
+
+
+  header {
+    background-color: #038582;
+    padding: 15px;
+    margin: 0px 300px;
+    border-radius: 10px;
+    background-color: rgba(201, 239, 253, 0.8);
+  }
+  
+  nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  
+  nav li {
+    display: inline-block;
+    margin-right: 30px;
+    
+   
+  }
+  
+  nav li:last-child {
+    margin-right: 0;
+  }
+  
+  nav a {
+    color: black;
+    font-size: 25px;
+    text-decoration: none;
+
+  }
+
+  nav a:hover {
+    border-radius: 5px;
+    padding: 4px 5px;
+    transition: background-color 0.3s ease-in-out;
+    background-color: #E4DCCF;
+  }
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  /* CSS for Admin Login Form */
+  /* body {
+    background-color: #f2f2f2;
+    font-family: Arial, sans-serif;
+  } */
+  /* .container {
+    margin: 100px auto;
+    max-width: 400px;
+    padding: 50px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+ .container h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  .container form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  .container form input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+  }
+  .container form button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    display: block;
+    margin: 0 auto;
+  } */
