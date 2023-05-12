@@ -44,7 +44,7 @@
 
 			<label for="subject">Subject:</label>
 			<select id="subject" name="subject">
-        <option value="" disabled selected hidden>Choose Subject</option>
+        <option value="" disabled selected hidden>Select Subject</option>
 				<option value="Data Structures">Data Structures</option>
 				<option value="Internet of Things">Internet of Things</option>
 				<option value="Data Science and Analytics">Data Science and Analytics</option>
