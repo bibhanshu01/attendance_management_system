@@ -16,11 +16,11 @@
   <nav>
     <ul>
       <li><a href="#">Admin</a></li>
-      <li><a href="#">Student</a></li>
-      <li><a href="admin/admin_teacher.php">Teacher</a></li>
-      <li><a href="student/student_course.php">Course</a></li>
-      <li><a href="teacher/teacher_subject.php">Subject</a></li>
-      <li><a href="teacher/teacher_attendance.php">Attendance</a></li>
+      <li><a href="../admin_student/admin_student.php">Student</a></li>
+      <li><a href="#">Teacher</a></li>
+      <li><a href="../admin_course/admin_course.php">Course</a></li>
+      <li><a href="../admin_subject/admin_subject.php">Subject</a></li>
+      <li><a href="../admin_attendance/admin_attendance.php">Attendance</a></li>
       <li><a href="logout.php"><i class="fa fa-sign-out"></i> Logout</a></li>
     </ul>
   </nav>
