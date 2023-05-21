@@ -29,11 +29,11 @@
 
 <!-- Admin Login Form starts -->
 <div class="container">
-		<h1>Admin Login</h1>
+		<h1>Login</h1>
 		<form method="POST" action="">
     <label for="userType">Login as:</label>
 			<select required name="userType">
-                <option value="">--Select User Roles--</option>
+                <option value="" disabled selected hidden>--Select User Role--</option>
                 <option value="Administrator">Administrator</option>
                 <option value="Teacher">Teacher</option>
                 <option value="Student">Student</option>
