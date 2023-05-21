@@ -12,21 +12,34 @@
 <body>
 <div class="heading">Attendance Management System</div>
 
+<!-- Navbar starts -->
 <header>
   <nav>
     <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="admin/admin_login.php">Admin</a></li>
-      <li><a href="student/student_login.php">Student</a></li>
-      <li><a href="teacher/teacher_login.php">Teacher</a></li>
+      <li><a href="../index.php">Home</a></li>
+      <li><a href="#">Admin</a></li>
+      <li><a href="../student/student_login.php">Student</a></li>
+      <li><a href="../teacher/teacher_login.php">Teacher</a></li>
     </ul>
   </nav>
 </header>
+<!-- Navbar ends -->
+
+
 
 <!-- Admin Login Form starts -->
-<!-- <div class="container"> -->
-		<!-- <h1>Admin Login</h1>
+<div class="container">
+		<h1>Admin Login</h1>
 		<form method="POST" action="">
+    <label for="userType">Login as:</label>
+			<select required name="userType">
+                <option value="">--Select User Roles--</option>
+                <option value="Administrator">Administrator</option>
+                <option value="Teacher">Teacher</option>
+                <option value="Student">Student</option>
+			</select>
+      
+
 			<label for="username">Username:</label>
 			<input type="text" id="username" name="username" required>
 
@@ -35,11 +48,14 @@
 
 			<button type="submit">Login</button>
 		</form>
-	</div> -->
-
+	</div>
 
 
 <!-- Admin Login Form ends -->
+
+
+
+
 
 
 
