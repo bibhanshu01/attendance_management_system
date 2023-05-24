@@ -1,3 +1,60 @@
+<?php
+  error_reporting(0);
+  include '../../connection/_dbconnection.php';
+  include '../../connection/_session.php';
+  //session_start();
+  //echo "Welcome ".$_SESSION['userName'];
+  if($_SERVER["REQUEST_METHOD"] == "POST"){
+    
+  $studentName=$_POST['name'];
+  $studentID=$_POST['roll_number'];
+  $studentEmail=$_POST['email'];
+  $courseID=$_POST['course'];
+  $studentpassword=$_POST['password'];
+   
+    $query=mysqli_query($conn,"select * from student where studentID ='$studentID'");
+    $ret=mysqli_fetch_array($query);
+
+    if($ret > 0){ 
+
+      echo "<script>alert('This roll number is already registered.');</script>";
+    }
+    else{
+
+    // $query=mysqli_query($conn,"insert into tblstudents(firstName,lastName,otherName,admissionNumber,password,classId,classArmId,dateCreated) 
+    // value('$firstName','$lastName','$otherName','$admissionNumber','12345','$classId','$classArmId','$dateCreated')");
+    
+    $query_st=mysqli_query($conn,"INSERT INTO student(studentID, studentName, studentEmail, studentpassword) 
+    VALUES('$studentID', '$studentName', '$studentEmail', '$studentpassword')");
+    
+    $query_er=mysqli_query($conn,"INSERT INTO enrollment (enrollmentID, studentID, subjectID)
+    SELECT ROW_NUMBER() OVER () + (SELECT COUNT(*) FROM enrollment) AS enrollmentID, '$studentID', subjectID
+    FROM subject
+    WHERE courseID = '$courseID'");
+
+    if ($query_st && $query_er) {
+        
+      echo "<script>alert('Registered Successfully!.');</script>";  
+      //$statusMsg = "<div class='alert alert-success'  style='margin-right:700px;'>Created Successfully!</div>";
+            
+    }
+    else
+    {
+      echo "<script>alert('An Error Occurred!.');</script>";
+      //$statusMsg = "<div class='alert alert-danger' style='margin-right:700px;'>An error Occurred!</div>";
+    }
+  }
+}
+
+
+
+
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +68,7 @@
 </head>
 <body>
 <div class="heading">Attendance Management System</div>
+
 
 <header>
   <nav>
@@ -29,28 +87,25 @@
 <!-- Student Registration Form starts -->
 <div class="container">
 		<h2>Student Registration</h2>
-		<form action="register.php" method="post">
+		<form action="" method="POST">
 			<label for="name">Name:</label>
-			<input type="text" id="name" name="name" placeholder="Name">
+			<input type="text" id="name" name="name" placeholder="Enter Name">
 
 			<label for="roll_number">Roll Number:</label>
-			<input type="text" id="roll_number" name="roll_number" placeholder="Roll Number">
+			<input type="text" id="roll_number" name="roll_number" placeholder="Enter Roll Number">
 
 			<label for="email">Email:</label>
-			<input type="text" id="email" name="email" placeholder="Email">
+			<input type="text" id="email" name="email" placeholder="Enter Email Address">
 
 			<label for="course">Course:</label>
-			<input type="text" id="course" name="course" placeholder="Course">
+			<input type="text" id="course" name="course" placeholder="Enter Course">
 
-			<label for="subject">Subject:</label>
-			<select id="subject" name="subject">
-        <option value="" disabled selected hidden>Select Subject</option>
-				<option value="Data Structures">Data Structures</option>
-				<option value="Internet of Things">Internet of Things</option>
-				<option value="Data Science and Analytics">Data Science and Analytics</option>
-			</select>
+      <label for="password">Password:</label>
+			<input type="text" id="password" name="password" required placeholder="Enter Password">
 
-			<input type="submit" value="Register">
+
+
+			<button type="submit" name="submit">Register</button>
 		</form>
 	</div>
 
@@ -58,38 +113,79 @@
 
 <!-- Student Registration Form ends -->
 
-<!-- Student Table starts -->
-<table>
+
+<!-- Student Table Display starts -->
+<?php
+// Retrieve student information from the database
+$query =  "SELECT DISTINCT student.studentID, student.studentName, student.studentEmail,
+ student.studentpassword, course.courseName FROM student JOIN enrollment ON enrollment.studentID = student.studentID 
+ JOIN subject ON subject.subjectID = enrollment.subjectID JOIN course ON course.courseID = subject.courseID";
+
+$result = $conn->query($query);
+$num = $result->num_rows;
+
+// Check if any results were returned
+if($num > 0) {
+    // Display the table header
+    echo "<table><tr><th>Student ID</th><th>Student Name</th><th>Student Email</th><th>Password</th><th>Course</th></tr>";
+    
+    // Loop through each row of data and display it in the table
+    while($row = $result->fetch_assoc()) {
+        echo "<tr><td>".$row["studentID"]."</td><td>".$row["studentName"]."</td><td>".$row["studentEmail"]."</td><td>".$row["studentpassword"]."</td><td>".$row["courseName"]."</td></tr>";
+    }
+    
+    // Close the table
+    echo "</table>";
+} else {
+    // If no results were returned, display a message
+    echo "No students found.";
+}
+
+// Close the database connection
+mysqli_close($conn);
+?>
+
+
+<!-- Student Table Display ends -->
+
+
+
+<!-- Student Table Display starts -->
+<!-- <table>
   <caption>STUDENTS</caption>
   <thead>
     <tr>
-      <th>Sr. No.</th>
-      <th>Name</th>
-      <th>Course</th>
-      <th>Subject</th>
       <th>Roll No.</th>
-      <th>Email</th>
+      <th>Student Name</th>
+      <th>Student Email</th>
+      <th>Password</th>
+      <th>Course</th>
     </tr>
   </thead>
   <tbody>
     <!-- <?php
-      // code to retrieve data from database and loop through each row
-      while($row = mysqli_fetch_assoc($result)) {
+      // Retrieve student information from the database
+      $query =  "SELECT DISTINCT student.studentID, student.studentName, student.studentEmail,
+      student.studentpassword, course.courseName FROM student JOIN enrollment ON enrollment.studentID = student.studentID 
+      JOIN subject ON subject.subjectID = enrollment.subjectID JOIN course ON course.courseID = subject.courseID";
+
+      $result = $conn->query($query);
+      $num = $result->num_rows;
+
+      while($row = $result->fetch_assoc()) {
         echo "<tr>";
-        echo "<td>" . $row['sr_no'] . "</td>";
-        echo "<td>" . $row['name'] . "</td>";
+        echo "<td>" . $row['studentID'] . "</td>";
+        echo "<td>" . $row['studentName'] . "</td>";
+        echo "<td>" . $row['studentEmail'] . "</td>";
+        echo "<td>" . $row['studentpassword'] . "</td>";
         echo "<td>" . $row['course'] . "</td>";
-        echo "<td>" . $row['subject'] . "</td>";
-        echo "<td>" . $row['roll_no'] . "</td>";
-        echo "<td>" . $row['email'] . "</td>";
         echo "</tr>";
       }
     ?> -->
   </tbody>
-</table>
-  
-   
-<!-- Student Table ends -->
+</table> -->
+    
+<!-- Student Table Display ends -->
 
 
 

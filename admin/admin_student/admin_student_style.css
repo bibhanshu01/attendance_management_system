@@ -162,6 +162,21 @@ input[type=submit]:hover {
   text-align: center;
   padding-bottom: 20px;
 }
+
+.container form button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 50px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  display: block;
+  margin: 0 auto;
+} 
+
+
 /* Registration Form CSS ends */
 
 /* Student Table CSS starts */

@@ -1,6 +1,106 @@
 <?php 
-include 'connection/_dbconnection.php';
-session_start();
+  if($_SERVER["REQUEST_METHOD"] == "POST"){
+    include 'connection/_dbconnection.php';
+    $userType = $_POST['userType'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    // $password = md5($password);
+
+    //Verify for Administrator Login
+    if($userType == "Administrator"){
+      $query = "SELECT * FROM admin WHERE adminID = '$username' AND adminpassword = '$password'";
+
+      $result = $conn->query($query);
+      $num = $result->num_rows;
+      $rows = $result->fetch_assoc();
+
+      if($num == 1){
+
+        session_start();
+        $_SESSION['loggedin'] = true;
+        $_SESSION['userId'] = $rows['adminID'];
+        $_SESSION['userName'] = $rows['adminName'];
+        $_SESSION['userEmail'] = $rows['adminEmail'];
+        
+        //echo "Welcome ".$_SESSION['userName'];
+        header("location: admin/admin_student/admin_student.php");
+        
+      }
+      
+      else{
+        echo "<script>alert('Invalid username or password.');</script>";
+
+
+      }
+
+    } //Administrator if statement ends here
+ 
+    //Verify for Teacher Login
+    else if($userType == "Teacher"){
+      $query = "SELECT * FROM teacher WHERE teacherID = '$username' AND teacherpassword = '$password'";
+
+      $result = $conn->query($query);
+      $num = $result->num_rows;
+      $rows = $result->fetch_assoc();
+
+      if($num == 1){
+
+        session_start();
+        $_SESSION['loggedin'] = true;
+        $_SESSION['userId'] = $rows['teacherID'];
+        $_SESSION['userName'] = $rows['teacherName'];
+        $_SESSION['userEmail'] = $rows['teacherEmail'];
+        
+        //echo "Welcome ".$_SESSION['userName'];
+        header("location: teacher/teacher_home.php");
+        
+      }
+      
+      else{
+        echo "<script>alert('Invalid username or password.');</script>";
+
+
+      }
+
+    } //Teacher if statement ends here
+
+    //Verify for Student Login
+    else if($userType == "Student"){
+      $query = "SELECT * FROM student WHERE studentID = '$username' AND studentpassword = '$password'";
+
+      $result = $conn->query($query);
+      $num = $result->num_rows;
+      $rows = $result->fetch_assoc();
+
+      if($num == 1){
+
+        session_start();
+        $_SESSION['loggedin'] = true;
+        $_SESSION['userId'] = $rows['studentID'];
+        $_SESSION['userName'] = $rows['studentName'];
+        $_SESSION['userEmail'] = $rows['studentEmail'];
+        
+        //echo "Welcome ".$_SESSION['userName'];
+        header("location: student/student_home.php");
+        
+      }
+      
+      else{
+        echo "<script>alert('Invalid username or password.');</script>";
+
+
+      }
+
+    } //Student if statement ends here
+
+    else{
+        echo "<script>alert('Invalid Selection.');</script>";
+    }
+
+
+
+
+  }
 ?>
 
 
