@@ -1,3 +1,12 @@
+<?php 
+include 'connection/_dbconnection.php';
+session_start();
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,8 +21,35 @@
 <body>
 <div class="heading">Attendance Management System</div>
 
+
+
+
+
+
 <!-- Navbar starts -->
 <header>
+  <nav>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <!-- <li><a href="#">Admin</a></li>
+      <li><a href="../student/student_login.php">Student</a></li>
+      <li><a href="../teacher/teacher_login.php">Teacher</a></li> -->
+    </ul>
+  </nav>
+</header>
+<!-- Navbar ends -->
+
+
+
+
+
+
+
+
+
+
+<!-- Navbar starts -->
+<!-- <header>
   <nav>
     <ul>
       <li><a href="../index.php">Home</a></li>
@@ -22,7 +58,7 @@
       <li><a href="../teacher/teacher_login.php">Teacher</a></li>
     </ul>
   </nav>
-</header>
+</header> -->
 <!-- Navbar ends -->
 
 
@@ -41,10 +77,10 @@
       
 
 			<label for="username">Username:</label>
-			<input type="text" id="username" name="username" required>
+			<input type="text" id="username" name="username" required placeholder="Enter Username">
 
 			<label for="password">Password:</label>
-			<input type="password" id="password" name="password" required>
+			<input type="password" id="password" name="password" required placeholder="Enter Password">
 
 			<button type="submit">Login</button>
 		</form>
@@ -52,6 +88,23 @@
 
 
 <!-- Admin Login Form ends -->
+
+<!-- PHP Variables from LOGIN FORM SET starts -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- PHP Variables from LOGIN FORM SET ends -->
 
 
 
