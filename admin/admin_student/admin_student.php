@@ -97,8 +97,8 @@
 			<label for="email">Email:</label>
 			<input type="text" id="email" name="email" placeholder="Enter Email Address">
 
-			<label for="course">Course:</label>
-			<input type="text" id="course" name="course" placeholder="Enter Course">
+			<label for="course">Course ID:</label>
+			<input type="text" id="course" name="course" placeholder="Enter Course ID">
 
       <label for="password">Password:</label>
 			<input type="text" id="password" name="password" required placeholder="Enter Password">
@@ -138,7 +138,7 @@ if($num > 0) {
     echo "</table>";
 } else {
     // If no results were returned, display a message
-    echo "No students found.";
+    echo "<script>alert('No Students Found!.');</script>";
 }
 
 // Close the database connection

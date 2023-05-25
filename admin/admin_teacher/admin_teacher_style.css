@@ -163,7 +163,54 @@ input[type=submit]:hover {
   padding-bottom: 20px;
 }
 
-.container form button[type="submit"] {
+
+
+/* 
+.container form button[type="submit"],
+.container form button[type="reset"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 50px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  display: inline-block;
+  margin: 0 auto;
+  margin-right: 10px;
+  
+}  */
+
+/*
+.container form button[type="reset"] {
+  float: right;
+}
+
+*/
+
+.buttons {
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 0.1%;
+}
+
+.buttons button[type="submit"],
+.buttons button[type="reset"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 50px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+
+
+
+/* .container form button[type="submit"] {
   background-color: #4CAF50;
   color: white;
   padding: 15px 50px;
@@ -175,6 +222,20 @@ input[type=submit]:hover {
   display: block;
   margin: 0 auto;
 } 
+
+.container form button[type="reset"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 50px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  display: block;
+  margin: 0 auto;
+}  */
+
 
 
 /* Registration Form CSS ends */

@@ -1,3 +1,19 @@
+<?php
+  error_reporting(0);
+  include '../../connection/_dbconnection.php';
+  include '../../connection/_session.php';
+
+   // Code to get the details of selected course and fill the form fields
+   if(isset($_POST['edit'])) {
+    $id = $_POST['id'];
+    $sql = "SELECT * FROM course WHERE courseID = '$id'";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+  }
+
+  ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,50 +45,141 @@
 <!-- Course Form starts -->
 <div class="course_container"> 
 	<h1>Courses</h1>
-	<form method="POST" action="add_course.php">
-		<label>Course Name:</label>
-		<input type="text" name="course_name" required>
-		
-		<label>Course Duration:</label>
-		<input type="text" name="course_duration" required>
+	<form  method="POST" action="">
 
-		<button type="submit" name="add_course">Add Course</button>
+		<label for="courseID">Course ID:</label>
+		<input type="text" id="courseID" name="courseID" value="<?php echo isset($row) ? $row['courseID'] : '';?>" required placeholder="Enter Course ID">
+
+		<label for="courseName">Course Name:</label>
+		<input type="text" id="courseName" name="courseName" value="<?php echo isset($row) ? $row['courseName'] : '';?>" required placeholder="Enter Course Name">
+		
+
+		<?php
+            	if (isset($row))
+                {
+            ?>
+                <input type="hidden" name="UID" value="<?php echo $row['courseID']; ?>">
+                <button type="submit" name="update" class="btn btn-warning">Update</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <?php
+                } else {           
+            ?>
+                <button type="submit" name="save" class="btn btn-primary">Save</button>
+            <?php
+                 }         
+            ?>
+			 	<button type="reset" id="clearButton" name="clearButton" onclick="resetFormFields()" class="btn btn-secondary">Clear</button>
 	</form>
+
 
 	<table>
 		<thead>
 			<tr>
 				<th>Sr. No.</th>
-				<th>Course</th>
-				<th>Duration</th>
-				<th>Action</th>
+				<th>Course ID</th>
+				<th>Course Name</th>
+				<th>Edit</th>
+				<th>Delete</th>
 			</tr>
 		</thead>
 		<tbody>
-			<!-- <?php
-			// Fetch courses from database and display in table
-			$conn = mysqli_connect("localhost", "username", "password", "database");
+			<?php
+				// If form submitted, insert data into database
+				if (isset($_POST['save'])) {
+					$courseID = $_POST['courseID'];
+					$courseName = $_POST['courseName'];
+				
 
-			$sql = "SELECT * FROM courses";
-			$result = mysqli_query($conn, $sql);
-			
-			if (mysqli_num_rows($result) > 0) {
-				$i = 1;
-				while ($row = mysqli_fetch_assoc($result)) {
-					echo "<tr>";
-					echo "<td>" . $i . "</td>";
-					echo "<td>" . $row['course_name'] . "</td>";
-					echo "<td>" . $row['course_duration'] . "</td>";
-					echo "<td><a href='remove_course.php?id=".$row['id']."'>Remove</a></td>";
-					echo "</tr>";
-					$i++;
+					$query=mysqli_query($conn,"select * from course where courseID ='$courseID'");
+					$ret=mysqli_fetch_array($query);
+
+					if($ret > 0){ 
+
+						echo "<script>alert('Already registered.');</script>";
+					}
+					else{
+						$sql = "INSERT INTO course (courseID, courseName)
+						 VALUES ('$courseID', '$courseName')";
+
+						if ($conn->query($sql) === TRUE) {
+							echo "<script>alert('Registered Successfully!');</script>";
+						} 
+						else {
+							echo "Error: " . $sql . "<br>" . $conn->error;
+						}
+
+					}
+
+					
 				}
+
+				//update and delete
+				if (isset($_POST['update'])) {
+					$id = $_POST['UID'];
+					$courseID = $_POST['courseID'];
+					$courseName = $_POST['courseName'];
+
+					$query = "UPDATE `course` SET `courseID`='$courseID', `courseName`='$courseName' WHERE `courseID`='$id'";
+					$result = mysqli_query($conn, $query);
+					if($result) {
+						echo "<script>alert('Course Details Updated Successfully!');</script>";
+					} else {
+						echo "<script>alert('Updation Failed!!!');</script>";
+					}
+				}
+
+				if (isset($_POST['delete'])) {
+					$id = $_POST['id'];
+
+					$query = "DELETE FROM `course` WHERE `courseID`='$id'";
+					$result = mysqli_query($conn, $query);
+					if($result) {
+						echo "<script>alert('Course Deleted Successfully!');</script>";
+					} else {
+						echo "<script>alert('Deletion Failed!!!');</script>";
+					}
+				}
+
+
+
+
+
+
+
+
+
+
+			// Fetch courses from database and display in table
+			$sql = "SELECT * FROM course";
+			$result = $conn->query($sql);
+			
+			if ($result->num_rows > 0) {
+				$i = 1;
+				while ($row = $result->fetch_assoc()) { ?>
+					<tr>
+						<td><?php echo $i++; ?></td> 
+						<td><?php echo $row['courseID']; ?></td>
+						<td><?php echo $row['courseName']; ?></td>
+						<td class="action-btns">
+							<form action="" method="POST">
+								<input type="hidden" name="id" value="<?php echo $row['courseID']; ?>">
+								<button type="submit" name="edit">Edit</button>
+							</form>
+						</td>
+						<td class="action-btns">
+							<form action="" method="POST">
+								<input type="hidden" name="id" value="<?php echo $row['courseID']; ?>">
+								<button type="submit" name="delete">Delete</button>
+							</form>
+						</td>
+					</tr>
+				<?php }
 			} else {
-				echo "<tr><td colspan='4'>No courses found.</td></tr>";
+				echo "0 results";
 			}
 			
-			mysqli_close($conn);
-			?> -->
+			
+			?>
 		</tbody>
 	</table>
 </div> 
@@ -84,6 +191,37 @@
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/js/font-awesome.min.js"></script>
+
+<!-- Clear Button Code starts -->
+
+<script>
+	function resetFormFields() {
+    // Replace these selectors with the appropriate selectors for your form fields
+      var inputFields = document.querySelectorAll('input[type="text"]');
+  
+      // Loop through all the input fields and set their values to empty strings
+      for (var i = 0; i < inputFields.length; i++) {
+        inputFields[i].value = '';
+      }
+  }
+
+  document.getElementById('clearButton').addEventListener('click', function() {
+      // Call the resetFormFields function to reset all the form fields
+      resetFormFields();
+  
+  });
+
+
+
+
+</script>
+
+<!-- Clear Button Code ends -->
+
+
+
+
+
 
 </body>
 </html>

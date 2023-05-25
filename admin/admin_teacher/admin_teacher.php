@@ -3,20 +3,13 @@
   include '../../connection/_dbconnection.php';
   include '../../connection/_session.php';
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+   // Code to get the details of selected teacher and fill the form fields
+   if(isset($_POST['edit'])) {
+    $id = $_POST['id'];
+    $sql = "SELECT * FROM teacher WHERE teacherID = '$id'";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+  }
 
   ?>
 
@@ -57,6 +50,40 @@
 		<form action="" method="POST">
 
 			<label for="tid">Teacher ID:</label>
+			<input type="text" id="tid" name="tid" value="<?php echo isset($row) ? $row['teacherID'] : '';?>" required placeholder="Enter Teacher ID">
+
+			<label for="name">Name:</label>
+			<input type="text" id="name" name="name" value="<?php echo isset($row) ? $row['teacherName'] : '';?>" required placeholder="Enter Name">
+
+			<label for="email">Email:</label>
+			<input type="text" id="email" name="email" value="<?php echo isset($row) ? $row['teacherEmail'] : '';?>" required placeholder="Enter Email Address">
+
+    		<label for="password">Password:</label>
+			<input type="text" id="password" name="password" value="<?php echo isset($row) ? $row['teacherpassword'] : '';?>" required placeholder="Enter Password">
+
+			<div class="buttons">
+			<?php
+            	if (isset($row))
+                {
+            ?>
+                <input type="hidden" name="id" value="<?php echo $row['teacherID']; ?>">
+                <button type="submit" name="update" class="btn btn-warning">Update</button>
+                <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+            <?php
+                } else {           
+            ?>
+                <button type="submit" name="save" class="btn btn-primary">Save</button>
+            <?php
+                 }         
+            ?>
+
+			<button type="reset" id="clearButton" name="clearButton" onclick="resetFormFields()" class="btn btn-secondary">Clear</button>
+
+			</div>
+
+
+
+			<!-- <label for="tid">Teacher ID:</label>
 			<input type="text" id="tid" name="tid" value="<?php echo $row['teacherID'];?>" required placeholder="Enter Teacher ID">
 
 			<label for="name">Name:</label>
@@ -80,7 +107,7 @@
             <button type="submit" name="save" class="btn btn-primary">Save</button>
             <?php
                  }         
-            ?>
+            ?> -->
 
 			<!-- <button type="submit" name="submit">Register</button> -->
 		</form>
@@ -105,7 +132,7 @@
 				<?php
 					
 					// If form submitted, insert data into database
-					if (isset($_POST['submit'])) {
+					if (isset($_POST['save'])) {
 						$teacherID = $_POST['tid'];
 						$teacherName = $_POST['name'];
 						$teacherEmail = $_POST['email'];
@@ -123,7 +150,7 @@
 							 VALUES ('$teacherID', '$teacherName', '$teacherEmail', '$teacherpassword')";
 
 							if ($conn->query($sql) === TRUE) {
-							echo "New record created successfully";
+								echo "<script>alert('Registered Successfully!');</script>";
 							} 
 							else {
 								echo "Error: " . $sql . "<br>" . $conn->error;
@@ -133,6 +160,48 @@
 
 						
 					}
+
+					//update and delete
+					if (isset($_POST['update'])) {
+						$id = $_POST['id'];
+						$teacherID = $_POST['tid'];
+						$teacherName = $_POST['name'];
+						$teacherEmail = $_POST['email'];
+						$teacherpassword = $_POST['password'];
+	
+						$query = "UPDATE `teacher` SET `teacherID`='$teacherID', `teacherName`='$teacherName', `teacherEmail`='$teacherEmail', `teacherpassword`='$teacherpassword' WHERE `teacherID`='$id'";
+						$result = mysqli_query($conn, $query);
+						if($result) {
+							echo "<script>alert('Teacher Details Updated Successfully!');</script>";
+						} else {
+							echo "<script>alert('Updation Failed!!!');</script>";
+						}
+					}
+	
+					if (isset($_POST['delete'])) {
+						$id = $_POST['id'];
+	
+						$query = "DELETE FROM `teacher` WHERE `teacherID`='$id'";
+						$result = mysqli_query($conn, $query);
+						if($result) {
+							echo "<script>alert('Teacher Deleted Successfully!');</script>";
+						} else {
+							echo "<script>alert('Deletion Failed!!!');</script>";
+						}
+					}
+
+
+
+
+
+
+
+
+
+
+
+
+
                     
                     // Fetch data from database and display in table
 					$sql = "SELECT * FROM teacher";
@@ -178,6 +247,35 @@
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/js/font-awesome.min.js"></script>
+
+
+<!-- Clear Button Code starts -->
+
+<script>
+	function resetFormFields() {
+    // Replace these selectors with the appropriate selectors for your form fields
+      var inputFields = document.querySelectorAll('input[type="text"]');
+  
+      // Loop through all the input fields and set their values to empty strings
+      for (var i = 0; i < inputFields.length; i++) {
+        inputFields[i].value = '';
+      }
+  }
+
+  document.getElementById('clearButton').addEventListener('click', function() {
+      // Call the resetFormFields function to reset all the form fields
+      resetFormFields();
+  
+  });
+
+
+
+</script>
+
+<!-- Clear Button Code ends -->
+
+
+
 
 </body>
 </html>
