@@ -1,3 +1,25 @@
+<?php
+  error_reporting(0);
+  include '../../connection/_dbconnection.php';
+  include '../../connection/_session.php';
+
+   // Code to get the details of selected subject and fill the form fields
+   if(isset($_POST['edit'])) {
+    $id = $_POST['id'];
+    $sql = "SELECT * FROM `subject` WHERE courseID = '$id'";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+  }
+
+?>
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,69 +43,163 @@
       <li><a href="../admin_course/admin_course.php">Course</a></li>
       <li><a href="#">Subject</a></li>
       <li><a href="../admin_attendance/admin_attendance.php">Attendance</a></li>
-      <li><a href="logout.php"><i class="fa fa-sign-out"></i> Logout</a></li>
+      <li><a href="../../logout.php"><i class="fa fa-sign-out"></i> Logout</a></li>
     </ul>
   </nav>
 </header>
 
 <!-- Subject Form starts -->
-<div class="subject_container">
-		<h2>Subjects</h2>
-	<form method="post">
-		<label>Subject Name:</label>
-		<input type="text" name="subject_name" required>
-		<label>Course Name:</label>
-		<input type="text" name="course_name" required>
-		<button type="submit" name="add_subject">Add Subject</button>
+<div class="container">
+	<h2>Add Subjects</h2>
+	<form method="post" action="">
+
+		<label for="subjectID">Subject ID:</label>
+		<input type="text" id="subjectID" name="subjectID" value="<?php echo isset($row) ? $row['subjectID'] : '';?>" required placeholder="Enter Subject ID">
+		
+		<label for="subjectName">Subject Name:</label>
+		<input type="text" id="subjectName" name="subjectName" value="<?php echo isset($row) ? $row['subjectName'] : '';?>" required placeholder="Enter Subject Name">
+		
+		<label for="courseID">Course ID:</label>
+		<input type="text" id="courseID" name="courseID" value="<?php echo isset($row) ? $row['courseID'] : '';?>" required placeholder="Enter Course ID">
+
+		<div class="buttons">
+		<?php
+            if (isset($row))
+            {
+        ?>
+        <input type="hidden" name="UID" value="<?php echo $row['subjectID']; ?>">
+        <button type="submit" name="update" class="btn btn-warning">Update</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+        <?php
+            } else {           
+        ?>
+        <button type="submit" name="save" class="btn btn-primary">Save</button>
+        <?php
+            }         
+        ?>
+		<button type="reset" id="clearButton" name="clearButton" onclick="resetFormFields()" class="btn btn-secondary">Clear</button>
+		</div>
+
 	</form>
+</div>
+
+<div class="subject_container">
+	<h2>Subjects</h2>
 	<table>
 		<thead>
 			<tr>
 				<th>Sr. No.</th>
-				<th>Subject</th>
-				<th>Course</th>
-				<th>Action</th>
+				<th>Subject ID</th>
+				<th>Subject Name</th>
+				<th>Course ID</th>
+				<th>Edit</th>
+				<th>Delete</th>
 			</tr>
 		</thead>
 		<tbody>
-			<!-- <?php
-				// Connect to the database
-				$conn = mysqli_connect("localhost", "username", "password", "database_name");
+		<?php
+				// If form submitted, insert data into database
+				if (isset($_POST['save'])) {
+					$subjectID = $_POST['subjectID'];
+					$subjectName = $_POST['subjectName'];
+					$courseID = $_POST['courseID'];
 				
-				// Check connection
-				if (!$conn) {
-					die("Connection failed: " . mysqli_connect_error());
-				}
-				
-				// Fetch subjects from the database
-				$sql = "SELECT * FROM subjects";
-				$result = mysqli_query($conn, $sql);
-				
-				// If there are subjects, display them in the table
-				if (mysqli_num_rows($result) > 0) {
-					$count = 1;
-					
-					while ($row = mysqli_fetch_assoc($result)) {
-						echo "<tr>";
-						echo "<td>" . $count . "</td>";
-						echo "<td>" . $row['subject_name'] . "</td>";
-						echo "<td>" . $row['course_name'] . "</td>";
-						echo "<td class='action-column'><button class='remove-btn' data-id='" . $row['id'] . "'>Remove</button></td>";
-						echo "</tr>";
-						
-						$count++;
+
+					$query=mysqli_query($conn,"select * from subject where subjectID ='$subjectID'");
+					$ret=mysqli_fetch_array($query);
+
+					if($ret > 0){ 
+
+						echo "<script>alert('Already registered.');</script>";
 					}
-				} else {
-					echo "<tr><td colspan='4'>No subjects found</td></tr>";
+					else{
+						$sql = "INSERT INTO `subject` (subjectID, subjectName, courseID)
+						VALUES ('$subjectID', '$subjectName', '$courseID')";
+
+						if ($conn->query($sql) === TRUE) {
+							echo "<script>alert('Registered Successfully!');</script>";
+						} 
+						else {
+							echo "Error: " . $sql . "<br>" . $conn->error;
+						}
+
+					}
+
+					
 				}
-				
-				// Close database connection
-				mysqli_close($conn);
-			?> -->
+
+				//update and delete
+				if (isset($_POST['update'])) {
+					$id = $_POST['UID'];    //UID is id of Update button
+					$subjectID = $_POST['subjectID'];
+					$subjectName = $_POST['subjectName'];
+					$courseID = $_POST['courseID'];
+
+					$query = "UPDATE `subject` SET `subjectID`='$subjectID', `subjectName`='$subjectName', `courseID`='$courseID' WHERE `subjectID`='$id'";
+					$result = mysqli_query($conn, $query);
+					if($result) {
+						echo "<script>alert('Subject Details Updated Successfully!');</script>";
+					} else {
+						echo "<script>alert('Updation Failed!!!');</script>";
+					}
+				}
+
+				if (isset($_POST['delete'])) {
+					$id = $_POST['id'];
+
+					$query = "DELETE FROM `subject` WHERE `subjectID`='$id'";
+					$result = mysqli_query($conn, $query);
+					if($result) {
+						echo "<script>alert('Subject Deleted Successfully!');</script>";
+					} else {
+						echo "<script>alert('Deletion Failed!!!');</script>";
+					}
+				}
+
+
+
+
+
+
+
+
+
+
+			// Fetch subjects from database and display in table
+			$sql = "SELECT * FROM `subject`";
+			$result = $conn->query($sql);
+			
+			if ($result->num_rows > 0) {
+				$i = 1;
+				while ($row = $result->fetch_assoc()) { ?>
+					<tr>
+						<td><?php echo $i++; ?></td> 
+						<td><?php echo $row['subjectID']; ?></td>
+						<td><?php echo $row['subjectName']; ?></td>
+						<td><?php echo $row['courseID']; ?></td>
+						<td class="action-btns">
+							<form action="" method="POST">
+								<input type="hidden" name="id" value="<?php echo $row['subjectID']; ?>">
+								<button type="submit" name="edit">Edit</button>
+							</form>
+						</td>
+						<td class="action-btns">
+							<form action="" method="POST">
+								<input type="hidden" name="id" value="<?php echo $row['subjectID']; ?>">
+								<button type="submit" name="delete">Delete</button>
+							</form>
+						</td>
+					</tr>
+				<?php }
+			} else {
+				echo "0 results";
+			}
+			
+			
+			?>
 		</tbody>
 	</table>
-	
-	</div>
+</div>
 
 <!-- Subject Form ends -->
 
@@ -123,6 +239,33 @@
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/js/font-awesome.min.js"></script>
+
+<!-- Clear Button Code starts -->
+
+<script>
+	function resetFormFields() {
+    // Replace these selectors with the appropriate selectors for your form fields
+      var inputFields = document.querySelectorAll('input[type="text"]');
+  
+      // Loop through all the input fields and set their values to empty strings
+      for (var i = 0; i < inputFields.length; i++) {
+        inputFields[i].value = '';
+      }
+  }
+
+  document.getElementById('clearButton').addEventListener('click', function() {
+      // Call the resetFormFields function to reset all the form fields
+      resetFormFields();
+  
+  });
+
+
+
+
+</script>
+
+<!-- Clear Button Code ends -->
+
 
 </body>
 </html>

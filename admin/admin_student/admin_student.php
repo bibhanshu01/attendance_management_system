@@ -78,36 +78,38 @@
       <li><a href="../admin_teacher/admin_teacher.php">Teacher</a></li>
       <li><a href="../admin_course/admin_course.php">Course</a></li>
       <li><a href="../admin_subject/admin_subject.php">Subject</a></li>
-      <li><a href="../admin_attendance/admin_attendace.php">Attendance</a></li>
-      <li><a href="logout.php"><i class="fa fa-sign-out"></i> Logout</a></li>
+      <li><a href="../admin_attendance/admin_attendance.php">Attendance</a></li>
+      <li><a href="../../logout.php"><i class="fa fa-sign-out"></i> Logout</a></li>
     </ul>
   </nav>
 </header>
 
 <!-- Student Registration Form starts -->
 <div class="container">
-		<h2>Student Registration</h2>
-		<form action="" method="POST">
-			<label for="name">Name:</label>
-			<input type="text" id="name" name="name" placeholder="Enter Name">
+	<h2>Student Registration</h2>
+	<form action="" method="POST">
+		<label for="name">Name:</label>
+		<input type="text" id="name" name="name" placeholder="Enter Name">
 
-			<label for="roll_number">Roll Number:</label>
-			<input type="text" id="roll_number" name="roll_number" placeholder="Enter Roll Number">
+		<label for="roll_number">Roll Number:</label>
+		<input type="text" id="roll_number" name="roll_number" placeholder="Enter Roll Number">
 
-			<label for="email">Email:</label>
-			<input type="text" id="email" name="email" placeholder="Enter Email Address">
+		<label for="email">Email:</label>
+		<input type="text" id="email" name="email" placeholder="Enter Email Address">
 
-			<label for="course">Course ID:</label>
-			<input type="text" id="course" name="course" placeholder="Enter Course ID">
+		<label for="course">Course ID:</label>
+		<input type="text" id="course" name="course" placeholder="Enter Course ID">
 
-      <label for="password">Password:</label>
-			<input type="text" id="password" name="password" required placeholder="Enter Password">
+    <label for="password">Password:</label>
+		<input type="text" maxlength="50" id="password" name="password" required placeholder="Enter Password">
 
-
+    <div class="buttons">
 
 			<button type="submit" name="submit">Register</button>
-		</form>
-	</div>
+      <button type="reset" id="clearButton" name="clearButton" onclick="resetFormFields()" class="btn btn-secondary">Clear</button>
+    </div>
+	</form>
+</div>
 
 
 
@@ -187,7 +189,30 @@ mysqli_close($conn);
     
 <!-- Student Table Display ends -->
 
+<!-- Clear Button Code starts -->
 
+<script>
+	function resetFormFields() {
+    // Replace these selectors with the appropriate selectors for your form fields
+      var inputFields = document.querySelectorAll('input[type="text"]');
+  
+      // Loop through all the input fields and set their values to empty strings
+      for (var i = 0; i < inputFields.length; i++) {
+        inputFields[i].value = '';
+      }
+  }
+
+  document.getElementById('clearButton').addEventListener('click', function() {
+      // Call the resetFormFields function to reset all the form fields
+      resetFormFields();
+  
+  });
+
+
+
+</script>
+
+<!-- Clear Button Code ends -->
 
 
 

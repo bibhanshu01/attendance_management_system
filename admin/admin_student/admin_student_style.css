@@ -151,7 +151,7 @@ input[type=submit]:hover {
 
 .container {
   margin: 30px auto;
-  max-width: 800px;
+  max-width: 1000px;
   padding: 30px;
   background-color: white;
   border-radius: 10px;
@@ -163,7 +163,28 @@ input[type=submit]:hover {
   padding-bottom: 20px;
 }
 
-.container form button[type="submit"] {
+
+.buttons {
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 0.1%;
+}
+
+.buttons button[type="submit"],
+.buttons button[type="reset"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 50px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+
+
+/* .container form button[type="submit"] {
   background-color: #4CAF50;
   color: white;
   padding: 15px 50px;
@@ -174,7 +195,7 @@ input[type=submit]:hover {
   margin-top: 20px;
   display: block;
   margin: 0 auto;
-} 
+}  */
 
 
 /* Registration Form CSS ends */
@@ -182,7 +203,7 @@ input[type=submit]:hover {
 /* Student Table CSS starts */
 table {
   border-collapse: collapse;
-  width: 800px;
+  width: 1000px;
   margin: 0px auto;
 }
 

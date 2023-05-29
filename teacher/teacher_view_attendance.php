@@ -40,9 +40,9 @@
 <header>
   <nav>
     <ul>
-      <li><a href="#">Home</a></li>
+      <li><a href="teacher_home.php">Home</a></li>
       <li><a href="teacher_take_attendance.php">Take Attendance</a></li>
-      <li><a href="teacher_view_attendance.php">View Attendance</a></li>
+      <li><a href="#">View Attendance</a></li>
       <li><a href="../logout.php"><i class="fa fa-sign-out"></i> Logout</a></li>
     </ul>
   </nav>

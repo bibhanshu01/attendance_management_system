@@ -37,14 +37,14 @@
       <li><a href="#">Course</a></li>
       <li><a href="../admin_subject/admin_subject.php">Subject</a></li>
       <li><a href="../admin_attendance/admin_attendance.php">Attendance</a></li>
-      <li><a href="logout.php"><i class="fa fa-sign-out"></i> Logout</a></li>
+      <li><a href="../../logout.php"><i class="fa fa-sign-out"></i> Logout</a></li>
     </ul>
   </nav>
 </header>
 
 <!-- Course Form starts -->
-<div class="course_container"> 
-	<h1>Courses</h1>
+<div class="container"> 
+	<h2>Add Courses</h2>
 	<form  method="POST" action="">
 
 		<label for="courseID">Course ID:</label>
@@ -53,7 +53,7 @@
 		<label for="courseName">Course Name:</label>
 		<input type="text" id="courseName" name="courseName" value="<?php echo isset($row) ? $row['courseName'] : '';?>" required placeholder="Enter Course Name">
 		
-
+		<div class="buttons">
 		<?php
             	if (isset($row))
                 {
@@ -69,9 +69,13 @@
                  }         
             ?>
 			 	<button type="reset" id="clearButton" name="clearButton" onclick="resetFormFields()" class="btn btn-secondary">Clear</button>
-	</form>
+		</div>
+		</form>
+</div>
 
 
+<div class="course_container"> 
+<h2>Courses</h2>
 	<table>
 		<thead>
 			<tr>

@@ -197,7 +197,8 @@ input[type=submit]:hover {
 
 .buttons button[type="submit"],
 .buttons button[type="reset"] {
-  background-color: #4CAF50;
+  background-color: #FFB84C;
+  /* background-color: #4CAF50; */
   color: white;
   padding: 15px 50px;
   border: none;
@@ -276,6 +277,7 @@ background-color: #f2f2f2;
 
 
   th, td {
+    border: 1px solid #ddd;
     text-align: left;
     padding: 8px;
   }
@@ -295,7 +297,7 @@ background-color: #f2f2f2;
     flex-basis: 50%;
     max-width: 300px;
   }
-  input[type=text], select {
+  /* input[type=text], select {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -303,7 +305,7 @@ background-color: #f2f2f2;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-  }
+  } */
   input[type=submit] {
     background-color: #4CAF50;
     color: white;
@@ -317,9 +319,9 @@ background-color: #f2f2f2;
   }
     
       
-  input[type=submit]:hover {
+  /* input[type=submit]:hover {
     background-color: #45a049;
-  }
+  } */
   /* .action-btns {
     display: flex;
     flex-direction: row;

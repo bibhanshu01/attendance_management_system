@@ -117,7 +117,7 @@ nav a:hover {
   background-color: #E4DCCF;
 }
 
-.subject_container {
+/* .subject_container {
 max-width: 900px;
 margin: 0 auto;
 padding-top: 30px;
@@ -128,10 +128,32 @@ align-items: center;
 
 .subject_container > h2{
 padding-bottom: 20px;
+} */
+
+.container {
+  margin: 30px auto;
+  max-width: 800px;
+  padding: 30px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
+.container > h2 {
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+
+
+
+
+
+
+
+
 /* Subject Form CSS starts */
-form {
+/* form {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -144,9 +166,70 @@ form {
     margin-right: 10px;
     text-align: right;
     width: 120px;
+  } */
+
+  input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
   }
   
-  input[type="text"] {
+  input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+
+  .buttons {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 0.1%;
+  }
+  
+  .buttons button[type="submit"],
+  .buttons button[type="reset"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 50px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+  }
+  
+
+
+  .subject_container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+    
+    .subject_container > h2{
+    padding-bottom: 20px;
+    }
+
+
+
+  
+  /* input[type="text"] {
     padding: 5px;
     border-radius: 3px;
     border: 1px solid #ccc;
@@ -162,7 +245,7 @@ form {
     color: white;
     border: none;
     cursor: pointer;
-  }
+  } */
   
   table {
     border-collapse: collapse;
@@ -184,19 +267,15 @@ form {
     background-color: #f5f5f5;
   }
   
-  .action-column {
-    text-align: center;
-  }
-  
-  .remove-btn {
-    padding: 5px;
-    border-radius: 3px;
-    background-color: #f44336;
+  .action-btns button {
+    background-color: red;
+    padding: 3px 4px;
     color: white;
     border: none;
+    border-radius: 4px;
     cursor: pointer;
+    margin-right: 5px;
   }
-
 
 
 

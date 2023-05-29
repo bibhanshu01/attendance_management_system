@@ -38,7 +38,7 @@
       <li><a href="../admin_course/admin_course.php">Course</a></li>
       <li><a href="../admin_subject/admin_subject.php">Subject</a></li>
       <li><a href="../admin_attendance/admin_attendance.php">Attendance</a></li>
-      <li><a href="logout.php"><i class="fa fa-sign-out"></i> Logout</a></li>
+      <li><a href="../../logout.php"><i class="fa fa-sign-out"></i> Logout</a></li>
     </ul>
   </nav>
 </header>
@@ -50,7 +50,7 @@
 		<form action="" method="POST">
 
 			<label for="tid">Teacher ID:</label>
-			<input type="text" id="tid" name="tid" value="<?php echo isset($row) ? $row['teacherID'] : '';?>" required placeholder="Enter Teacher ID">
+			<input type="text" id="tid" maxlength="10" name="tid" value="<?php echo isset($row) ? $row['teacherID'] : '';?>" required placeholder="Enter Teacher ID">
 
 			<label for="name">Name:</label>
 			<input type="text" id="name" name="name" value="<?php echo isset($row) ? $row['teacherName'] : '';?>" required placeholder="Enter Name">
@@ -59,7 +59,7 @@
 			<input type="text" id="email" name="email" value="<?php echo isset($row) ? $row['teacherEmail'] : '';?>" required placeholder="Enter Email Address">
 
     		<label for="password">Password:</label>
-			<input type="text" id="password" name="password" value="<?php echo isset($row) ? $row['teacherpassword'] : '';?>" required placeholder="Enter Password">
+			<input type="text" id="password" maxlength="50" name="password" value="<?php echo isset($row) ? $row['teacherpassword'] : '';?>" required placeholder="Enter Password">
 
 			<div class="buttons">
 			<?php

@@ -101,6 +101,15 @@
 
 
   }
+  elseif($_SERVER["REQUEST_METHOD"] == "GET") {
+    // Set input field values to empty when the page is refreshed
+    $userType = "";
+    $username = "";
+    $password = "";
+  }
+
+
+
 ?>
 
 
