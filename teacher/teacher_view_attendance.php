@@ -1,24 +1,49 @@
 <?php
   error_reporting(0);
+  // Include the DB connection file
   include '../connection/_dbconnection.php';
   include '../connection/_session.php';
-  //session_start();
-  //echo "Welcome ".$_SESSION['userName'];
 
+  if(isset($_POST['save'])) {
+    $courseID = $_POST['course'];
+    $subjectID = $_POST['subject'];
+    $attendanceDate = $_POST['attendance_date'];
+    $allAttendance = isset($_POST['attendance_type']) ? true : false; //rearranged
+    //echo $allAttendance;
+    if($allAttendance) {
+      // $attendanceQuery = "SELECT * FROM attendance WHERE subjectID='$subjectID'";
+         $attendanceQuery = "SELECT student.studentID, student.studentName, `subject`.subjectName, attendance.attendanceDate, attendance.attendanceStatus
+         FROM attendance
+         INNER JOIN student
+         ON attendance.studentID = student.studentID
+         INNER JOIN `subject`
+         ON attendance.subjectID = `subject`.subjectID
+         WHERE `subject`.courseID = '$courseID'
+         AND `subject`.subjectID = '$subjectID'";
+    } else {
+      // $attendanceQuery = "SELECT * FROM attendance WHERE subjectID='$subjectID' AND attendanceDate='$attendanceDate'";
+         $attendanceQuery = "SELECT student.studentID, student.studentName, `subject`.subjectName, attendance.attendanceDate, attendance.attendanceStatus
+         FROM attendance
+         INNER JOIN student
+         ON attendance.studentID = student.studentID
+         INNER JOIN `subject`
+         ON attendance.subjectID = `subject`.subjectID
+         WHERE `subject`.courseID = '$courseID'
+         AND `subject`.subjectID = '$subjectID'
+         AND attendance.attendanceDate = '$attendanceDate'";
+    }
+    //echo $attendanceQuery;
+   // $result = mysqli_query($conn, $attendanceQuery);
+    $rst = $conn->query($attendanceQuery);
+    //echo $result;
+    //$result = mysqli_query($conn, $attendanceQuery);
+   // $attendanceRow = $result->fetch_assoc();
+   // echo $attendanceRow[0];
+   // echo $attendanceRow['subjectID'];
+  }
+  
 
-
-
-
-
-
-
-
-
-
-?>
-
-
-
+  ?>
 
 
 <!DOCTYPE html>
@@ -28,50 +53,365 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance Management System</title>
-    <link rel="stylesheet" href="teacher_css/style.css">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="teacher_css/teacher_view_attendance.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body>
 <div class="heading">Attendance Management System</div>
 
+  <!-- Navbar starts -->
+  <header>
+        <nav>
+            <ul>
+                <li><a href="teacher_home.php">Home</a></li>
+                <li><a href="teacher_take_attendance.php">Take Attendance</a></li>
+                <li><a href="#">View Attendance</a></li>
+                <li><a href="../logout.php"><i class="fa fa-sign-out"></i> Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Navbar ends -->
 
-<!-- Navbar starts -->
-<header>
-  <nav>
-    <ul>
-      <li><a href="teacher_home.php">Home</a></li>
-      <li><a href="teacher_take_attendance.php">Take Attendance</a></li>
-      <li><a href="#">View Attendance</a></li>
-      <li><a href="../logout.php"><i class="fa fa-sign-out"></i> Logout</a></li>
-    </ul>
-  </nav>
-</header>
-<!-- Navbar ends -->
+<!-- Course, Subject and Date Selection starts -->
 
-
-
-<!-- Teacher Login Form starts -->
 <div class="container">
-		<h1>Welcome <?php echo $_SESSION['userName'];?></h1>
-		<!-- <form method="POST" action="">
-			<label for="username">Username:</label>
-			<input type="text" id="username" name="username" required>
+  <form method="POST" action="">
+    <label for="course">Select Course:</label>
+    <select name="course" id="course" required>
+      <option value="" disabled selected hidden>Select Course</option>
+      <?php
+        $courseQuery = "SELECT * FROM course";
+        $result = mysqli_query($conn, $courseQuery);
+        while($row = mysqli_fetch_assoc($result)) {
+          echo '<option value="'.$row['courseID'].'">'.$row['courseName'].'</option>';
+        }
+      ?>
+    </select>
 
-			<label for="password">Password:</label>
-			<input type="password" id="password" name="password" required>
+    <label for="subject">Select Subject:</label>
+    <select name="subject" id="subject" required>
+      <option value="" disabled selected hidden>Select Subject</option>
+    </select>
+    
 
-			<button type="submit">Login</button>
-		</form> -->
-	</div>
+    <br/><br/>
+    <input type="radio" id="single_day" name="attendance_type" value="Single Day" checked>
+    <label for="single_day">One Day Attendance</label>
+    
+    <!-- name modified below -->
+    <input type="radio" id="all" name="attendance_type" value="All">     
+    <label for="all">All</label>
+
+    <br/><br/>
+    <div id="attendance_date">
+      <label for="date">Select Date:</label>
+      <input type="date" id="date" name="attendance_date">
+    </div>
+
+    <br/><br/>
+    <div class="buttons">
+      <button type="submit" name="save" class="btn btn-primary">Submit</button>
+      <button type="reset" name="reset">Reset</button>
+    </div>
+  </form>
+</div>
+<!-- Course, Subject and Date Selection ends -->
+
+<!-- View Attendance starts -->
+
+
+<div class="view_attendance_container">
+<?php
+if (isset($rst)) {
+  //$attendanceRow = $rst->fetch_assoc();
+  $subjectQuery = "SELECT * FROM `subject` WHERE subjectID='$subjectID'";
+  $subjectResult = mysqli_query($conn, $subjectQuery);
+  $subjectRow = $subjectResult->fetch_assoc();     //mysqli_fetch_assoc($subjectResult);
+  $subjectName = $subjectRow['subjectName'];
+  
+  $courseQuery = "SELECT courseName FROM course WHERE courseID = '$courseID'";
+  $courseResult = mysqli_query($conn, $courseQuery);
+  $courseRow = $courseResult->fetch_assoc(); 
+  $courseName = $courseRow['courseName'];
+  echo '<h2>'.$courseName.' - '.$subjectName.'</h2>';
+  //echo $attendance['studentID'];
+  if ($rst->num_rows > 0) { // Check if there are any records in the result
+   
+    //echo '<table id="attendanceTable">';
+    echo '<table>';
+    echo '<thead>';
+    echo '<tr>';
+    echo '<th>Sr. No.</th>';
+    echo '<th>Roll No.</th>';
+    echo '<th>Student Name</th>';
+    echo '<th>Attendance Date</th>';
+    echo '<th>Attendance Status</th>';
+    echo '</tr>';
+    echo '</thead>';
+    echo '<tbody>';
+
+    $count = 0;
+    //$attendanceRow = [];
+    while($attendanceRow = $rst->fetch_assoc()) {
+      $count++;
+      echo '<tr>';
+      echo '<td>'.$count.'</td>';
+      echo '<td>'.$attendanceRow['studentID'].'</td>';
+      echo '<td>'.$attendanceRow['studentName'].'</td>';
+      echo '<td>'.$attendanceRow['attendanceDate'].'</td>';
+      echo '<td>'.$attendanceRow['attendanceStatus'].'</td>';
+      echo '</tr>';
+      
+      // Get the next row
+     
+        //$attendanceRow = $rst->fetch_assoc();
+    }
+
+    echo '</tbody>';
+    echo '</table>';
+    echo '<br/><br/>';
+    // Check if all records are fetched and displayed
+    $attendanceRow = $rst->fetch_assoc();
+    if (!$attendanceRow) {
+      //echo '<button onclick="printTable()">Print</button>';
+        //echo '<button onclick="window.print()">Print</button>';
+        echo '<button onclick="printDiv()">Print</button>';
+
+    }
+    // if ($attendanceRow->num_rows = 0){
+      // echo '<button onclick="window.print()">Print</button>';
+    //}
+  } else {
+    echo 'No attendance records found.';
+  }
+}
 
 
 
-<!-- Teacher Login Form ends -->
 
 
 
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// if (isset($result)) {
+//   // $subjectQuery = "SELECT * FROM `subject` WHERE subjectID='$subjectID'";
+//   // $subjectResult = mysqli_query($conn, $subjectQuery);
+//   // $subjectRow = mysqli_fetch_assoc($subjectResult);
+//   $attendanceRow = $result->fetch_assoc();
+//   echo '<h2>'.$courseID.' - '.$attendanceRow['subjectName'].'</h2>';
+//   echo '<table>';
+//   echo '<thead>';
+//   echo '<tr>';
+//   echo '<th>Sr. No.</th>';
+//   echo '<th>Roll No.</th>';
+//   echo '<th>Student Name</th>';
+//   echo '<th>Attendance Date</th>';
+//   echo '<th>Attendance Status</th>';
+//   echo '</tr>';
+//   echo '</thead>';
+//   echo '<tbody>';
+  
+ 
+//   //= $result->fetch_assoc()
+//   $count = 0;
+//   while($attendanceRow) {
+//     $count++;
+//     // $studentID = $attendanceRow['studentID'];
+//     // $attendanceStatus = $attendanceRow['attendanceStatus'];
+//     // $attendanceDate = $attendanceRow['attendanceDate'];
+
+//     // $studentQuery = "SELECT * FROM student WHERE studentID='$studentID'";
+//     // $studentResult = mysqli_query($conn, $studentQuery);
+//     // $studentRow = $studentResult->fetch_assoc();
+
+//     echo '<tr>';
+//     echo '<td>'.$count.'</td>';
+//     echo '<td>'.$attendanceRow['studentID'].'</td>';
+//     echo '<td>'.$attendanceRow['studentName'].'</td>';
+//     echo '<td>'.$attendanceRow['attendanceDate'].'</td>';
+//     echo '<td>'.$attendanceRow['attendanceStatus'].'</td>';
+//     echo '</tr>';
+//   }
+
+//   echo '</tbody>';
+//   echo '</table>';
+//   echo '<br/><br/>';
+//   echo '<button onclick="window.print()">Print</button>';
+// }
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- <?php
+    if(isset($result)) {
+      $subjectQuery = "SELECT * FROM `subject` WHERE subjectID='$subjectID'";
+      $subjectResult = mysqli_query($conn, $subjectQuery);
+      $subjectRow = mysqli_fetch_assoc($subjectResult);
+      echo '<h2>'.$courseID.' - '.$subjectRow['subjectName'].'</h2>';
+      echo '<table>';
+      echo '<tr><th>Sr. No.</th><th>Roll No.</th><th>Student Name</th><th>Attendance Date</th><th>Attendance Status</th></tr>';
+
+      $count = 0;
+      while($attendanceRow = $result->fetch_assoc()) {
+        echo $count;
+        $studentID = $attendanceRow['studentID'];
+        $attendanceStatus = $attendanceRow['attendanceStatus'];
+        $attendanceDate = $attendanceRow['attendanceDate'];
+
+        $studentQuery = "SELECT * FROM student WHERE studentID='$studentID'";
+        $studentResult = mysqli_query($conn, $studentQuery);
+        $studentRow = mysqli_fetch_assoc($studentResult);
+       
+        echo '<tr><td>'.$count.'</td><td>'.$studentRow['studentID'].'</td><td>'.$studentRow['studentName'].'</td><td>'.$attendanceDate.'</td><td>'.$attendanceStatus.'</td></tr>';
+      }
+      echo '</table>';
+      
+      echo '<br/><br/>';
+      echo '<button onclick="window.print()">Print</button>';
+    }
+
+    ?> -->
+    
+    </div>
+    
+<!-- View Attendance ends -->
+
+
+    <script>
+    // document.getElementById("course").addEventListener("change", function() {
+    // var courseID = this.value;
+    
+    // var xhr = new XMLHttpRequest();
+    // xhr.open("GET", "get_subjects.php?course_id=" + courseID, true);
+    // xhr.onload = function() {
+    //   if (this.status === 200) {
+    //     document.getElementById("subject").innerHTML = '<option value="">Select Subject</option>' + this.responseText;
+    //   }
+    // };
+    // xhr.send();
+    // });
+    
+    document.getElementById("all").addEventListener("click", function() {
+    document.getElementById("attendance_date").style.display = "none";
+    });
+    
+    document.getElementById("single_day").addEventListener("click", function() {
+    document.getElementById("attendance_date").style.display = "block";
+    });
+    </script>
+
+<script>
+      const courseDropdown = document.getElementById('course');
+      const subjectDropdown = document.getElementById('subject');
+
+      courseDropdown.addEventListener('change', function() {
+        const courseId = this.value;
+        subjectDropdown.innerHTML = '<option value="">Loading...</option>';
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'get_subjects.php?course_id=' + courseId, true);
+        xhr.onload = function() {
+          if (this.status === 200) {
+            const subjects = JSON.parse(this.responseText);
+
+            let optionsHtml = '<option value="" disabled selected hidden>Select Subject</option>';
+            subjects.forEach(function(subject) {
+              optionsHtml += `<option value="${subject.subjectID}">${subject.subjectName}</option>`;
+            });
+
+            subjectDropdown.innerHTML = optionsHtml;
+          }
+        };
+        xhr.send();
+      });
+    </script>
+
+
+<!-- <script>
+function printTable() {
+  var content = document.getElementsByTagName('table')[0].outerHTML;
+  var newWindow = window.open();
+  newWindow.document.write(content);
+  newWindow.print();
+  newWindow.close();
+}
+</script> -->
+
+<!-- <script>
+function printTable() {
+  var table = document.getElementById("attendanceTable");
+  var newWin = window.open("", "Print-Window");
+  newWin.document.open();
+  newWin.document.write('<html><body onload="window.print()">' + table.outerHTML + '</body></html>');
+  newWin.document.close();
+}
+</script> -->
+
+
+<!-- JS script for printing the div -->
+<script type="text/javascript">
+function printDiv(){
+var printContents = document.getElementsByClassName("attendance_container")[0].innerHTML;
+var originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+}
+</script>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/js/font-awesome.min.js"></script>
 
 </body>
 </html>

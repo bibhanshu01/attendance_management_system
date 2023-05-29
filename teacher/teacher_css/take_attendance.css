@@ -184,6 +184,14 @@ body {
 
 
 
+      .take_attendance_container {
+        margin: 20px auto;
+        max-width: 800px;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  
+      }
 
 
 
@@ -206,7 +214,21 @@ body {
       padding-bottom: 0.09px;
     }
 
+    caption {
+        text-align: center;
+        padding-bottom: 0.09px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+  
+      
+      
     
+
+
+
+
+
     form label {
         font-size: 20px;
         display: block;
@@ -278,10 +300,28 @@ body {
         margin-top: 10px;
         }
 
+        .take_attendance_container form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+          
+          button[name="submit_attendance"] {
+            margin-top: 20px;
+          }
 
-
-
-
+        /* button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 50px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+            text-align: center;
+        }
+ */
 
 
 

@@ -91,7 +91,7 @@ if(isset($_POST['submit_attendance'])) {
 
             <div class="attendance_date">
                 <label for="attendance_date">Select Date:</label>
-                <input type="date" id="attendance_date" name="attendance_date" required>
+                <input type="date" id="attendance_date" name="attendance_date" required placeholder="Select Date">
             </div>
 
             <div class="buttons">
