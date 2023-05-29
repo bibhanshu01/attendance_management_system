@@ -1,0 +1,350 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    
+}
+
+
+.heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 36px;
+    font-weight: bold;
+    width: 100%;
+    height: 100px;
+    background-color: skyblue;
+    color: black;
+} 
+
+body {
+  background-color: #f2f2f2;
+  font-family: Arial, sans-serif;
+}
+
+
+  header {
+    background-color: #038582;
+    padding: 15px;
+    margin: 0px 300px;
+    border-radius: 10px;
+    background-color: rgba(201, 239, 253, 0.8);
+  }
+  
+  nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  
+  nav li {
+    display: inline-block;
+    margin-right: 30px;
+    
+   
+  }
+  
+  nav li:last-child {
+    margin-right: 0;
+  }
+  
+  nav a {
+    color: black;
+    font-size: 25px;
+    text-decoration: none;
+
+  }
+
+  nav a:hover {
+    border-radius: 5px;
+    padding: 4px 5px;
+    transition: background-color 0.3s ease-in-out;
+    background-color: #E4DCCF;
+  }
+  
+/* 
+  .container {
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    }
+    
+    .take_attendance_container {
+      margin: 20px auto;
+      max-width: 800px;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+    } */
+
+    .container {
+        margin: 30px auto;
+        max-width: 800px;
+        padding: 30px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+      
+      .container > h1 {
+        text-align: center;
+        padding-bottom: 20px;
+      }
+      
+      input[type=text], select {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      
+      input[type=submit] {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+      input[type=submit]:hover {
+        background-color: #45a049;
+      }
+      
+      .attendance_date label {
+        font-size: 18px;
+        color: #333;
+        margin-right: 10px;
+      }
+
+      .attendance_date input[type="date"] {
+        padding: 10px 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        color: #333;
+        outline: none;
+      }
+
+      .attendance_date input[type="date"] {
+        padding: 10px 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        color: #333;
+        outline: none;
+      }
+
+
+      .buttons {
+        text-align: center;
+        margin-top: 15px;
+        margin-bottom: 0.1%;
+      }
+      
+      .buttons button[type="submit"],
+      .buttons button[type="reset"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 15px 50px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-left: 10px;
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .take_attendance_container {
+      display: none;
+      }
+      
+      .take_attendance_container:has(table) {
+      display: block;
+      }
+
+    .take_attendance_container > h2 {
+      text-align: center;
+      padding-bottom: 0.09px;
+    }
+
+    
+    form label {
+        font-size: 20px;
+        display: block;
+        margin-bottom: 10px;
+        }
+        
+        form select {
+        font-size: 18px;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+       /* border: none; */
+        }
+        
+        #attendance_date {
+        display: block;
+        }
+        
+        form input[type='radio'] {
+        margin-right: 10px;
+        }
+        
+        form button {
+        background-color: #333;
+        color: white;
+        font-size: 20px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+        }
+        
+        table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+        }
+        
+        th {
+        background-color: #333;
+        color: white;
+        text-align: left;
+        padding: 8px;
+        }
+        
+        th, td {
+          border: 1px solid #ddd;
+          padding: 8px;
+          text-align: left;
+        }
+    
+        tr:nth-child(even) {
+        background-color: #f2f2f2;
+        }
+        
+        td {
+        padding: 8px;
+        }
+        
+        button {
+        background-color: #333;
+        color: white;
+        font-size: 20px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* CSS for the attendance form */
+/* form {
+    margin: 50px auto;
+    width: 50%;
+    text-align: center;
+    }
+    
+    label, select, input[type="date"] {
+    display: block;
+    margin: 10px auto;
+    }
+    
+    input[type="submit"] {
+    display: block;
+    margin: 20px auto;
+    }
+    
+    table {
+    margin: 50px auto;
+    border-collapse: collapse;
+    }
+    
+    th, td {
+    padding: 10px;
+    border: 1px solid black;
+    }
+    
+    .attendance-status {
+    text-align: center;
+    }
+    
+    .attendance-status input[type="checkbox"] {
+    transform: scale(1.5);
+    } */
