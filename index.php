@@ -152,26 +152,6 @@
 
 
 
-
-
-
-
-
-<!-- Navbar starts -->
-<!-- <header>
-  <nav>
-    <ul>
-      <li><a href="../index.php">Home</a></li>
-      <li><a href="#">Admin</a></li>
-      <li><a href="../student/student_login.php">Student</a></li>
-      <li><a href="../teacher/teacher_login.php">Teacher</a></li>
-    </ul>
-  </nav>
-</header> -->
-<!-- Navbar ends -->
-
-
-
 <!-- Admin Login Form starts -->
 <div class="container">
 		<h1>Login</h1>

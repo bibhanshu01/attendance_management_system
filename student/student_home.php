@@ -27,10 +27,9 @@
 <header>
   <nav>
     <ul>
-      <li><a href="../index.php">Home</a></li>
-      <li><a href="../admin/admin_login.php">Admin</a></li>
-      <li><a href="#">Student</a></li>
-      <li><a href="../teacher/teacher_login.php">Teacher</a></li>
+      <li><a href="#">Home</a></li>
+      <li><a href="student_view_attendance.php">View Attendance</a></li>
+      <li><a href="../logout.php"><i class="fa fa-sign-out"></i> Logout</a></li>
     </ul>
   </nav>
 </header>
@@ -42,8 +41,8 @@
 
 <!-- Student Login Form starts -->
 <div class="container">
-		<h1>Student Login</h1>
-		<form method="POST" action="">
+  <h1>Welcome <?php echo $_SESSION['userName'];?></h1>
+		<!-- <form method="POST" action="">
 			<label for="username">Username:</label>
 			<input type="text" id="username" name="username" required>
 
@@ -51,8 +50,8 @@
 			<input type="password" id="password" name="password" required>
 
 			<button type="submit">Login</button>
-		</form>
-	</div>
+		</form> -->
+</div>
 
 
 

@@ -119,6 +119,7 @@ body {
 }
 .container {
   margin: 100px auto;
+  margin-top: 20px;
   max-width: 400px;
   padding: 50px;
   background-color: white;

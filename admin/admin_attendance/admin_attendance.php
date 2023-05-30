@@ -330,9 +330,9 @@ if (isset($rst)) {
 
     ?> -->
     
-    </div>
+</div>
     
-    <script>
+  <script>
     // document.getElementById("course").addEventListener("change", function() {
     // var courseID = this.value;
     
@@ -353,9 +353,9 @@ if (isset($rst)) {
     document.getElementById("single_day").addEventListener("click", function() {
     document.getElementById("attendance_date").style.display = "block";
     });
-    </script>
+  </script>
 
-<script>
+  <script>
       const courseDropdown = document.getElementById('course');
       const subjectDropdown = document.getElementById('subject');
 
@@ -379,7 +379,7 @@ if (isset($rst)) {
         };
         xhr.send();
       });
-    </script>
+  </script>
 
 
 <!-- <script>
