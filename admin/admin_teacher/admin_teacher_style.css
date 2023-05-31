@@ -197,8 +197,7 @@ input[type=submit]:hover {
 
 .buttons button[type="submit"],
 .buttons button[type="reset"] {
-  background-color: #FFB84C;
-  /* background-color: #4CAF50; */
+  background-color: #4CAF50;
   color: white;
   padding: 15px 50px;
   border: none;

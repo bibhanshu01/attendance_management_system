@@ -259,3 +259,85 @@
   } 
 
   /* buttons button css ends */
+
+  /* attendance form css starts */
+  .attendance_container {
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+  }
+
+  .attendance_container {
+    display: none;
+    }
+    
+    .attendance_container:has(table) {
+    display: block;
+    }
+
+  .attendance_container > h2 {
+    text-align: center;
+    padding-bottom: 0.09px;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    }
+    
+    th {
+    background-color: #333;
+    color: white;
+    text-align: left;
+    padding: 8px;
+    }
+    
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    tr:nth-child(even) {
+    background-color: #f2f2f2;
+    }
+    
+    td {
+    padding: 8px;
+    }
+    
+    .attendance_container button {
+    background-color: #333;
+    color: white;
+    font-size: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    }
+    
+    @media print {
+    nav, form button, button {
+    display: none;
+    }
+    
+    h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    }
+    }
+
+
+
+
+
+
+
+
+  /* attendance form css ends */

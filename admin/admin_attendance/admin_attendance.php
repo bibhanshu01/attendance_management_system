@@ -8,9 +8,11 @@
     $courseID = $_POST['course'];
     $subjectID = $_POST['subject'];
     $attendanceDate = $_POST['attendance_date'];
-    $allAttendance = isset($_POST['attendance_type']) ? true : false; //rearranged
-    //echo $allAttendance;
-    if($allAttendance) {
+   // $allAttendance = isset($_POST['attendance_type']) ? false : true; //rearranged
+   // echo $allAttendance;
+   if(isset($_POST['attendance_type'])){
+    $selected_radio = $_POST['attendance_type'];
+    if($selected_radio == "All") {
       // $attendanceQuery = "SELECT * FROM attendance WHERE subjectID='$subjectID'";
          $attendanceQuery = "SELECT student.studentID, student.studentName, `subject`.subjectName, attendance.attendanceDate, attendance.attendanceStatus
          FROM attendance
@@ -20,7 +22,7 @@
          ON attendance.subjectID = `subject`.subjectID
          WHERE `subject`.courseID = '$courseID'
          AND `subject`.subjectID = '$subjectID'";
-    } else {
+    } elseif($selected_radio == "Single") {
       // $attendanceQuery = "SELECT * FROM attendance WHERE subjectID='$subjectID' AND attendanceDate='$attendanceDate'";
          $attendanceQuery = "SELECT student.studentID, student.studentName, `subject`.subjectName, attendance.attendanceDate, attendance.attendanceStatus
          FROM attendance
@@ -31,15 +33,11 @@
          WHERE `subject`.courseID = '$courseID'
          AND `subject`.subjectID = '$subjectID'
          AND attendance.attendanceDate = '$attendanceDate'";
+      }
+   
+      $rst = $conn->query($attendanceQuery);
+  
     }
-    //echo $attendanceQuery;
-   // $result = mysqli_query($conn, $attendanceQuery);
-    $rst = $conn->query($attendanceQuery);
-    //echo $result;
-    //$result = mysqli_query($conn, $attendanceQuery);
-   // $attendanceRow = $result->fetch_assoc();
-   // echo $attendanceRow[0];
-   // echo $attendanceRow['subjectID'];
   }
   
 
@@ -64,10 +62,10 @@
   <nav>
     <ul>
       <li><a href="#">Admin</a></li>
-      <li><a href="../admin_student/admin_student.php">Student</a></li>
-      <li><a href="../admin_teacher/admin_teacher.php">Teacher</a></li>
       <li><a href="../admin_course/admin_course.php">Course</a></li>
       <li><a href="../admin_subject/admin_subject.php">Subject</a></li>
+      <li><a href="../admin_student/admin_student.php">Student</a></li>
+      <li><a href="../admin_teacher/admin_teacher.php">Teacher</a></li>
       <li><a href="#">Attendance</a></li>
       <li><a href="../../logout.php"><i class="fa fa-sign-out"></i> Logout</a></li>
     </ul>
@@ -113,17 +111,17 @@
     
 
     <br/><br/>
-    <input type="radio" id="single_day" name="attendance_type" value="Single Day" checked>
-    <label for="single_day">One Day Attendance</label>
+    <input type="radio" id="single_day" name="attendance_type" value="Single" checked>
+    <label for="single_day" id="label_single">One Day Attendance</label>
     
     <!-- name modified below -->
     <input type="radio" id="all" name="attendance_type" value="All">     
-    <label for="all">All</label>
+    <label for="all" id="label_all">All</label>
 
     <br/><br/>
     <div id="attendance_date">
       <label for="date">Select Date:</label>
-      <input type="date" id="date" name="attendance_date">
+      <input type="date" id="attendance_date" name="attendance_date">
     </div>
 
     <br/><br/>
@@ -195,7 +193,8 @@ if (isset($rst)) {
       // echo '<button onclick="window.print()">Print</button>';
     //}
   } else {
-    echo 'No attendance records found.';
+    //echo 'No attendance records found.';
+    echo "<script>alert('No Record Found!!!');</script>";
   }
 }
 
@@ -333,26 +332,23 @@ if (isset($rst)) {
 </div>
     
   <script>
-    // document.getElementById("course").addEventListener("change", function() {
-    // var courseID = this.value;
-    
-    // var xhr = new XMLHttpRequest();
-    // xhr.open("GET", "get_subjects.php?course_id=" + courseID, true);
-    // xhr.onload = function() {
-    //   if (this.status === 200) {
-    //     document.getElementById("subject").innerHTML = '<option value="">Select Subject</option>' + this.responseText;
-    //   }
-    // };
-    // xhr.send();
-    // });
     
     document.getElementById("all").addEventListener("click", function() {
     document.getElementById("attendance_date").style.display = "none";
     });
     
+    document.getElementById("label_all").addEventListener("click", function() {
+    document.getElementById("attendance_date").style.display = "none";
+    });
+
     document.getElementById("single_day").addEventListener("click", function() {
     document.getElementById("attendance_date").style.display = "block";
     });
+
+    document.getElementById("label_single").addEventListener("click", function() {
+    document.getElementById("attendance_date").style.display = "block";
+    });
+
   </script>
 
   <script>

@@ -23,7 +23,7 @@
         $_SESSION['userEmail'] = $rows['adminEmail'];
         
         //echo "Welcome ".$_SESSION['userName'];
-        header("location: admin/admin_student/admin_student.php");
+        header("location: admin/admin_course/admin_course.php");
         
       }
       
