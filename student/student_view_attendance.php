@@ -79,7 +79,7 @@
 <!-- Subject Selection Form starts -->
 <div class="subject_form_container" id="subject-form" style="display: none;">
   <form method="POST">
-  <label for="subject">Select Course:</label>
+  <label for="subject">Select Subject:</label>
     <select name="subject" id="subject" required>
       <option value="" disabled selected hidden>Select Subject</option>
       <?php

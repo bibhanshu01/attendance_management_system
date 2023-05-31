@@ -189,14 +189,14 @@ input[type=submit]:hover {
 
 */
 
-.buttons {
+.subject_form_container .buttons {
   text-align: center;
   margin-top: 15px;
   margin-bottom: 0.1%;
 }
 
-.buttons button[type="submit"],
-.buttons button[type="reset"] {
+.subject_form_container .buttons button[type="submit"],
+.subject_form_container .buttons button[type="reset"] {
   background-color: #4CAF50;
   color: white;
   padding: 15px 50px;
@@ -239,6 +239,142 @@ input[type=submit]:hover {
 
 
 /* Registration Form CSS ends */
+
+/* nav radio container css starts */
+.nav_radio_container {
+  margin: 100px auto;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  max-width: 400px;
+  padding: 40px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav_radio_container label {
+  font-weight: bold;
+  margin-left: 15px;
+  margin-right: 20px;
+  color: #333;
+
+}
+
+.nav_radio_container input[type="radio"] {
+  margin-right: 5px;
+}
+
+
+
+/* nav radio container css ends */
+
+
+/* subject, date form container css starts */
+.date_form_container {
+  margin: 100px auto;
+  max-width: 400px;
+  padding: 50px;
+  padding-top: 25px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}
+
+
+.date_form_container label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+ }
+
+ 
+
+.date_form_container form input[type="date"], .date_form_container form select {
+  font-size: 18px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+ /* border: none; */
+ }
+
+
+/* .subject_form_container input[type="date"] {
+  display: block;
+} */
+
+.date_form_container .buttons button[type="submit"] {
+  margin-left: 60px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
+
+/* subject, date form container css ends */
+
+/* buttons button css starts */
+/* 
+.buttons button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 40px;
+}  */
+
+/* buttons button css ends */
+
+
+.attendance_container {
+  margin-top: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
