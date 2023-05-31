@@ -2,7 +2,7 @@
 // Include the DB connection file
 include '../connection/_dbconnection.php';
 include '../connection/_session.php';
-
+$teacherID = $_SESSION['userId'];
 // Check if the form is submitted
 if(isset($_POST['submit_attendance'])) {
     // Get the selected course, subject and attendance date
@@ -76,7 +76,11 @@ if(isset($_POST['submit_attendance'])) {
             <select name="course" id="course" required>
                 <option value="" disabled selected hidden>Select Course</option>
                 <?php
-                $courseQuery = "SELECT * FROM course";
+                $courseQuery = "SELECT DISTINCT course.courseID, course.courseName
+                FROM course
+                JOIN `subject` ON course.courseID = `subject`.courseID
+                JOIN teacher_subject ON `subject`.subjectID = teacher_subject.subjectID
+                WHERE teacher_subject.teacherID = '$teacherID'";
                 $result = mysqli_query($conn, $courseQuery);
                 while($row = mysqli_fetch_assoc($result)) {
                     echo '<option value="'.$row['courseID'].'">'.$row['courseName'].'</option>';
@@ -107,8 +111,8 @@ if(isset($_POST['submit_attendance'])) {
         $courseID = $_POST['course'];
         $subjectID = $_POST['subject'];
         $query = "SELECT courseName, subjectName FROM course
-                    INNER JOIN subject ON subject.courseID = course.courseID
-                    WHERE subject.subjectID = '$subjectID'";
+                    INNER JOIN `subject` ON `subject`.courseID = course.courseID
+                    WHERE `subject`.subjectID = '$subjectID'";
         $result = mysqli_query($conn, $query);
         $row = mysqli_fetch_assoc($result);
         $courseName = $row['courseName'];
