@@ -163,6 +163,10 @@ input[type=submit]:hover {
   padding-bottom: 20px;
 }
 
+.file_registration,
+.manual_registration {
+  margin-top: 10px;
+}
 
 .buttons {
   text-align: center;
