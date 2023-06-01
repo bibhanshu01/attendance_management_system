@@ -24,7 +24,9 @@
       }
     
       $rst = $conn->query($attendanceQuery);
-      
+      if ($rst->num_rows == 0){
+        echo "<script>alert('No Record Found!!!');</script>";
+      }
       
     
      }

@@ -139,14 +139,14 @@ body {
         outline: none;
       }
 
-      .attendance_date input[type="date"] {
+      /* .attendance_date input[type="date"] {
         padding: 10px 15px;
         border-radius: 5px;
         border: 1px solid #ccc;
         font-size: 16px;
         color: #333;
         outline: none;
-      }
+      } */
 
 
       .buttons {

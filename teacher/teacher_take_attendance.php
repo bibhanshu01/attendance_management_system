@@ -125,25 +125,43 @@ if(isset($_POST['submit_attendance'])) {
         $result = mysqli_query($conn, $query);
 
         // Display attendance table with checkbox inputs for each student
-        echo '<form method="POST" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '">
-                <input type="hidden" name="attendance_date" value="' . $_POST['attendance_date'] . '">
-                <input type="hidden" name="course" value="' . $courseID . '">
-                <input type="hidden" name="subject" value="' . $subjectID . '">
+        // echo "<form method='POST' action='' . htmlspecialchars($_SERVER['PHP_SELF']) . ''>
+        //         <input type='hidden' name='attendance_date' value='' . $_POST['attendance_date'] . ''>
+        //         <input type='hidden' name='course' value='' . $courseID . ''>
+        //         <input type='hidden' name='subject' value='' . $subjectID . ''>
+        //         <table>
+        //             <caption>'.$courseName.' - '.$subjectName.' - '.$_POST['attendance_date'].'</caption>
+        //             <thead>
+        //                 <tr>
+        //                     <th>Student ID</th>
+        //                     <th>Student Name</th>
+        //                     <th><label><input type='checkbox' onclick='markAllPresent(this)'>Status</label></th>
+        //                     <th>Status</th>
+        //                 </tr>
+        //             </thead>
+        //             <tbody>";
+
+        echo "<form method='POST' action='" . htmlspecialchars($_SERVER['PHP_SELF']) . "'>
+                <input type='hidden' name='attendance_date' value='" . $_POST['attendance_date'] . "'>
+                <input type='hidden' name='course' value='" . $courseID . "'>
+                <input type='hidden' name='subject' value='" . $subjectID . "'>
                 <table>
-                    <caption>'.$courseName.' - '.$subjectName.' - '.$_POST['attendance_date'].'</caption>
+                    <caption>".$courseName." - ".$subjectName." - ".$_POST['attendance_date']."</caption>
                     <thead>
                         <tr>
                             <th>Student ID</th>
                             <th>Student Name</th>
-                            <th>Status</th>
+                            <th><label><input type=\"checkbox\" onclick=\"markAllPresent(this)\">Status</label></th>
                         </tr>
                     </thead>
-                    <tbody>';
+                    <tbody>";
+
+
         while($row = mysqli_fetch_assoc($result)) {
             echo '<tr>
                     <td>'.$row['studentID'].'</td>
                     <td>'.$row['studentName'].'</td>
-                    <td><input type="checkbox" name="'.$row['studentID'].'"></td>
+                    <td class="attendance-status"><input type="checkbox" name="'.$row['studentID'].'" ></td>
                 </tr>';
         }
         echo '</tbody>
@@ -183,6 +201,40 @@ if(isset($_POST['submit_attendance'])) {
         xhr.send();
     });
 </script>
+
+
+
+
+
+
+<!-- function for markall checkboxes starts -->
+<script>
+ 
+  // Function to mark all attendance as present
+ function markAllPresent(checkBox) {
+        var checkboxes = document.querySelectorAll('.attendance-status input[type="checkbox"]');
+        for(var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = checkBox.checked;
+        }
+    }
+
+
+</script>
+
+
+<!-- function for markall checkboxes ends -->
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 
 </html>
