@@ -159,11 +159,11 @@ if(isset($_POST['submit_attendance'])) {
 <script>
     const courseDropdown = document.getElementById('course');
     const subjectDropdown = document.getElementById('subject');
-
+    
     courseDropdown.addEventListener('change', function() {
         const courseId = this.value;
         subjectDropdown.innerHTML = '<option value="">Loading...</option>';
-
+        
         const xhr = new XMLHttpRequest();
         xhr.open('GET', 'get_subjects.php?course_id=' + courseId, true);
         xhr.onload = function() {
