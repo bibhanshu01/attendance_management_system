@@ -221,14 +221,33 @@ body {
     border-radius: 5px;
    /* border: none; */
     }
+
+
+    input[type="radio"] {
+      display: inline-block;
+      
+  }
+  
+  label[for="single_day"], label[for="all"] {
+      display: inline-block;
+      margin-right: 10px;
+
+  }
+  
     
     #attendance_date {
     display: block;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    color: #333;
+    outline: none;
     }
     
-    form input[type='radio'] {
+    /* form input[type='radio'] {
     margin-right: 10px;
-    }
+    } */
     
     form button {
     background-color: #333;

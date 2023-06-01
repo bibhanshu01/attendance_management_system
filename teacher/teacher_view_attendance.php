@@ -99,11 +99,36 @@
     </select>
     
 
+
     <br/><br/>
+    <input type="radio" id="single_day" name="attendance_type" value="Single" checked>
+    <label for="single_day" id="label_single">Select Date:</label>
+    <label for="date"></label>
+    <input type="date" id="attendance_date" name="attendance_date">
+   
+    <br/><br/>
+
+    <input type="radio" id="all" name="attendance_type" value="All">     
+    <label for="all" id="label_all">All</label>
+
+   
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <br/><br/>
     <input type="radio" id="single_day" name="attendance_type" value="Single" checked>
     <label for="single_day" id="label_single">One Day Attendance</label>
     
-    <!-- name modified below -->
+   
     <input type="radio" id="all" name="attendance_type" value="All">     
     <label for="all" id="label_all">All</label>
 
@@ -111,7 +136,7 @@
     <div id="attendance_date">
       <label for="date">Select Date:</label>
       <input type="date" id="attendance_date" name="attendance_date">
-    </div>
+    </div> -->
 
 
     <br/><br/>
