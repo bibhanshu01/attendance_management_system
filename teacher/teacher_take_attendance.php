@@ -107,8 +107,8 @@ if(isset($_POST['submit_attendance'])) {
         $courseID = $_POST['course'];
         $subjectID = $_POST['subject'];
         $query = "SELECT courseName, subjectName FROM course
-                    INNER JOIN subject ON subject.courseID = course.courseID
-                    WHERE subject.subjectID = '$subjectID'";
+                    INNER JOIN `subject` ON `subject`.courseID = course.courseID
+                    WHERE `subject`.subjectID = '$subjectID'";
         $result = mysqli_query($conn, $query);
         $row = mysqli_fetch_assoc($result);
         $courseName = $row['courseName'];
