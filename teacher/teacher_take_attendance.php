@@ -2,7 +2,7 @@
 // Include the DB connection file
 include '../connection/_dbconnection.php';
 include '../connection/_session.php';
-
+$teacherID = $_SESSION['userId'];
 // Check if the form is submitted
 if(isset($_POST['submit_attendance'])) {
     // Get the selected course, subject and attendance date
@@ -76,7 +76,11 @@ if(isset($_POST['submit_attendance'])) {
             <select name="course" id="course" required>
                 <option value="" disabled selected hidden>Select Course</option>
                 <?php
-                $courseQuery = "SELECT * FROM course";
+                $courseQuery = "SELECT DISTINCT course.courseID, course.courseName
+                FROM course
+                JOIN `subject` ON course.courseID = `subject`.courseID
+                JOIN teacher_subject ON `subject`.subjectID = teacher_subject.subjectID
+                WHERE teacher_subject.teacherID = '$teacherID'";
                 $result = mysqli_query($conn, $courseQuery);
                 while($row = mysqli_fetch_assoc($result)) {
                     echo '<option value="'.$row['courseID'].'">'.$row['courseName'].'</option>';
@@ -155,13 +159,15 @@ if(isset($_POST['submit_attendance'])) {
 <script>
     const courseDropdown = document.getElementById('course');
     const subjectDropdown = document.getElementById('subject');
-
+    
     courseDropdown.addEventListener('change', function() {
         const courseId = this.value;
+        const teachId =  "<?php echo $teacherID; ?>";
         subjectDropdown.innerHTML = '<option value="">Loading...</option>';
-
+        
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'get_subjects.php?course_id=' + courseId, true);
+        // xhr.open('GET', 'get_subjects.php?course_id=' + courseId, true);
+        xhr.open('GET', `get_subjects.php?course_id=${courseId}&teach_id=${teachId}`, true);
         xhr.onload = function() {
             if (this.status === 200) {
                 const subjects = JSON.parse(this.responseText);
