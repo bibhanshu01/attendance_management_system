@@ -162,10 +162,12 @@ if(isset($_POST['submit_attendance'])) {
     
     courseDropdown.addEventListener('change', function() {
         const courseId = this.value;
+        const teachId =  "<?php echo $teacherID; ?>";
         subjectDropdown.innerHTML = '<option value="">Loading...</option>';
         
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'get_subjects.php?course_id=' + courseId, true);
+        // xhr.open('GET', 'get_subjects.php?course_id=' + courseId, true);
+        xhr.open('GET', `get_subjects.php?course_id=${courseId}&teach_id=${teachId}`, true);
         xhr.onload = function() {
             if (this.status === 200) {
                 const subjects = JSON.parse(this.responseText);

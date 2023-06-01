@@ -3,6 +3,7 @@
   // Include the DB connection file
   include '../connection/_dbconnection.php';
   include '../connection/_session.php';
+  $teacherID = $_SESSION['userId'];
 
   if(isset($_POST['save'])) {
     $courseID = $_POST['course'];
@@ -79,14 +80,19 @@
     <select name="course" id="course" required>
       <option value="" disabled selected hidden>Select Course</option>
       <?php
-        $courseQuery = "SELECT * FROM course";
+        // $courseQuery = "SELECT * FROM course";
+        $courseQuery = "SELECT DISTINCT course.courseID, course.courseName
+        FROM course
+        JOIN `subject` ON course.courseID = `subject`.courseID
+        JOIN teacher_subject ON `subject`.subjectID = teacher_subject.subjectID
+        WHERE teacher_subject.teacherID = '$teacherID'";
         $result = mysqli_query($conn, $courseQuery);
         while($row = mysqli_fetch_assoc($result)) {
           echo '<option value="'.$row['courseID'].'">'.$row['courseName'].'</option>';
         }
       ?>
     </select>
-
+     
     <label for="subject">Select Subject:</label>
     <select name="subject" id="subject" required>
       <option value="" disabled selected hidden>Select Subject</option>
@@ -344,6 +350,58 @@ if (isset($rst)) {
   </script>
 
 <script>
+    const courseDropdown = document.getElementById('course');
+    const subjectDropdown = document.getElementById('subject');
+    
+    courseDropdown.addEventListener('change', function() {
+        const courseId = this.value;
+        const teachId =  "<?php echo $teacherID; ?>";
+        subjectDropdown.innerHTML = '<option value="">Loading...</option>';
+        
+        console.log(courseId);
+
+        const xhr = new XMLHttpRequest();
+        // xhr.open('GET', 'get_subjects.php?course_id=' + courseId, true);
+        xhr.open('GET', `get_subjects.php?course_id=${courseId}&teach_id=${teachId}`, true);
+        xhr.onload = function() {
+            if (this.status === 200) {
+                const subjects = JSON.parse(this.responseText);
+
+                let optionsHtml = '<option value="" disabled selected hidden>Select Subject</option>';
+                subjects.forEach(function(subject) {
+                    optionsHtml += `<option value="${subject.subjectID}">${subject.subjectName}</option>`;
+                });
+
+                subjectDropdown.innerHTML = optionsHtml;
+            }
+        };
+        xhr.send();
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <script>
       const courseDropdown = document.getElementById('course');
       const subjectDropdown = document.getElementById('subject');
 
@@ -367,7 +425,7 @@ if (isset($rst)) {
         };
         xhr.send();
       });
-    </script>
+    </script> -->
 
 
 <!-- <script>
