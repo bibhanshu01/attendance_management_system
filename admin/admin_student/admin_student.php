@@ -49,7 +49,7 @@
     }
   }
   
-  if(isset($_POST['fsubmit'])){
+  if((isset($_POST['fsubmit'])) && (isset($_FILES['excel_file']['name']) && !empty($_FILES['excel_file']['name']))){
 
     $fileName = $_FILES['excel_file']['name'];
     $file_ext = pathinfo($fileName, PATHINFO_EXTENSION);
@@ -80,7 +80,7 @@
   
           if($ret > 0){ 
   
-            echo "<script>alert('This roll number is already registered.');</script>";
+            echo "<script>alert('Trying To Register Duplicate Data!!!');</script>";
           }
           else{
   
@@ -124,8 +124,10 @@
 
 
 
-
   } //is fsubmit ends
+  else{
+    echo "<script>alert('File Is Missing Or Invalid File Format!!!');</script>";
+  }
   
 
 
@@ -346,6 +348,7 @@ fileRegistrationRadio.addEventListener('click', () => {
   manualRegistrationDiv.style.display = 'none';
   msubmitButton.style.display = 'none';
   mclearButton.style.display = 'none';
+  fsubmitButton.style.display = 'inline-block';
 });
 
 manualRegistrationRadio.addEventListener('click', () => {

@@ -168,6 +168,9 @@ input[type=submit]:hover {
   margin-top: 10px;
 }
 
+.file_registration{
+  margin-bottom: 10px;
+}
 .buttons {
   text-align: center;
   margin-top: 15px;
