@@ -49,7 +49,9 @@
     }
   }
   
-  if((isset($_POST['fsubmit'])) && (isset($_FILES['excel_file']['name']) && !empty($_FILES['excel_file']['name']))){
+  if(isset($_POST['fsubmit'])){
+
+    if(isset($_FILES['excel_file']['name']) && !empty($_FILES['excel_file']['name'])){
 
     $fileName = $_FILES['excel_file']['name'];
     $file_ext = pathinfo($fileName, PATHINFO_EXTENSION);
@@ -120,14 +122,15 @@
       echo "<script>alert('Invalid File Format!!!');</script>";
     }
    
-    
+  } //file presence and filename check
+  else{
+    echo "<script>alert('File Is Missing Or Invalid File Format!!!');</script>";
+  }
 
 
 
   } //is fsubmit ends
-  else{
-    echo "<script>alert('File Is Missing Or Invalid File Format!!!');</script>";
-  }
+ 
   
 
 
