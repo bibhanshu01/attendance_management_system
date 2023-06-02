@@ -2,70 +2,89 @@
   error_reporting(0);
   include '../../connection/_dbconnection.php';
   include '../../connection/_session.php';
+  require '../../vendor/autoload.php';
+
+  use PhpOffice\PhpSpreadsheet\Spreadsheet;
+  use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
   //session_start();
   //echo "Welcome ".$_SESSION['userName'];
   // if($_SERVER["REQUEST_METHOD"] == "POST")
-  if (isset($_POST['submit'])){
-    // Check if an Excel file has been uploaded
-    if(isset($_FILES['excel_file']) && !empty($_FILES['excel_file']['tmp_name'])) {
-      $file = $_FILES['excel_file']['tmp_name'];
-      $handle = fopen($file, "r");
-
-      // Loop through each row of the Excel file and insert into database
-      while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-          $studentID = $data[0];
-          $studentName = $data[1];
-          $studentEmail = $data[2];
-          $courseID = $data[3];
-          $studentpassword = $data[4];
-
-          $query = mysqli_query($conn,"select * from student where studentID ='$studentID'");
-          $ret = mysqli_fetch_array($query);
-
-          if($ret > 0){ 
-              echo "<script>alert('This roll number is already registered.');</script>";
-          } else {
-              $query_st = mysqli_query($conn,"INSERT INTO student(studentID, studentName, studentEmail, studentpassword) 
-                  VALUES('$studentID', '$studentName', '$studentEmail', '$studentpassword')");
-
-              $query_er = mysqli_query($conn,"INSERT INTO enrollment (enrollmentID, studentID, subjectID)
-                  SELECT ROW_NUMBER() OVER () + (SELECT COUNT(*) FROM enrollment) AS enrollmentID, '$studentID', subjectID
-                  FROM `subject`
-                  WHERE courseID = '$courseID'");
-
-              if ($query_st && $query_er) {     
-                  echo "<script>alert('File Registered Successfully!.');</script>";  
-              } else {
-                  echo "<script>alert('An Error Occurred!');</script>";
-              }
-          }
-      }
-
-      fclose($handle);
-    } else {
-        // If no Excel file was uploaded, Manual Registration
-        $studentName=$_POST['name'];
-        $studentID=$_POST['roll_number'];
-        $studentEmail=$_POST['email'];
-        $courseID=$_POST['course'];
-        $studentpassword=$_POST['password'];
-         
-        // Rest of the code remains same as before
-        $studentID=$_POST['roll_number'];
-        $studentName=$_POST['name'];
-        $studentEmail=$_POST['email'];
-        $courseID=$_POST['course'];
-        $studentpassword=$_POST['password'];
+  if(isset($_POST['submit'])){
+    $studentID=$_POST['roll_number'];
+    $studentName=$_POST['name'];
+    $studentEmail=$_POST['email'];
+    $courseID=$_POST['course'];
+    $studentpassword=$_POST['password'];
      
-        $query=mysqli_query($conn,"select * from student where studentID ='$studentID'");
-        $ret=mysqli_fetch_array($query);
+      $query=mysqli_query($conn,"select * from student where studentID ='$studentID'");
+      $ret=mysqli_fetch_array($query);
   
-        if($ret > 0){ 
+      if($ret > 0){ 
   
-          echo "<script>alert('This roll number is already registered.');</script>";
-        }
-        else {
+        echo "<script>alert('This roll number is already registered.');</script>";
+      }
+      else{
   
+      // $query=mysqli_query($conn,"insert into tblstudents(firstName,lastName,otherName,admissionNumber,password,classId,classArmId,dateCreated) 
+      // value('$firstName','$lastName','$otherName','$admissionNumber','12345','$classId','$classArmId','$dateCreated')");
+      
+      $query_st=mysqli_query($conn,"INSERT INTO student(studentID, studentName, studentEmail, studentpassword) 
+      VALUES('$studentID', '$studentName', '$studentEmail', '$studentpassword')");
+      
+      $query_er=mysqli_query($conn,"INSERT INTO enrollment (enrollmentID, studentID, subjectID)
+      SELECT ROW_NUMBER() OVER () + (SELECT COUNT(*) FROM enrollment) AS enrollmentID, '$studentID', subjectID
+      FROM `subject`
+      WHERE courseID = '$courseID'");
+  
+      if ($query_st && $query_er) {
+          
+        echo "<script>alert('Registered Successfully!.');</script>";  
+              
+      }
+      else
+      {
+        echo "<script>alert('An Error Occurred!.');</script>";
+       
+      }
+    }
+  }
+  
+  if(isset($_POST['fsubmit'])){
+
+    $fileName = $_FILES['excel_file']['name'];
+    $file_ext = pathinfo($fileName, PATHINFO_EXTENSION);
+
+    $allowed_ext = ['xls','csv','xlsx'];
+
+    if(in_array($file_ext, $allowed_ext)){
+
+      $inputFileNamePath = $_FILES['excel_file']['tmp_name'];
+
+      $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFileNamePath);
+      //$spreadsheet = IOFactory::createReader($inputFileNamePath);
+
+      $data= $spreadsheet->getActiveSheet()->toArray();
+
+      $count ="0";
+      foreach($data as $row){
+
+        if($count > 0){
+          $studentID = $row['0'];
+          $studentName = $row['1'];
+          $studentEmail = $row['2'];
+          $courseID = $row['3'];
+          $studentpassword = $row['4'];
+          
+          $query=mysqli_query($conn,"select * from student where studentID ='$studentID'");
+          $ret=mysqli_fetch_array($query);
+  
+          if($ret > 0){ 
+  
+            echo "<script>alert('This roll number is already registered.');</script>";
+          }
+          else{
+  
+    
       
             $query_st=mysqli_query($conn,"INSERT INTO student(studentID, studentName, studentEmail, studentpassword) 
             VALUES('$studentID', '$studentName', '$studentEmail', '$studentpassword')");
@@ -75,24 +94,39 @@
             FROM `subject`
             WHERE courseID = '$courseID'");
   
-            if ($query_st && $query_er) {
-          
-              echo "<script>alert('Registered Successfully!.');</script>";  
-              //$statusMsg = "<div class='alert alert-success'  style='margin-right:700px;'>Created Successfully!</div>";
-              
-            }
-            else
-            {
-              echo "<script>alert('An Error Occurred!.');</script>";
-              //$statusMsg = "<div class='alert alert-danger' style='margin-right:700px;'>An error Occurred!</div>";
-            }
+            $msg = true;
+          } 
+
+        } //is count > 0 ends
+        else{
+          $count = "1";
         }
-     }
+
+      } //foreach ends
+
+      if(isset($msg)){
+        echo "<script>alert('Students Registered Successfully.');</script>";
+      }
+      else
+      {
+        echo "<script>alert('Some Error Occurred!.');</script>";
+
+      }
+
+
+
+    } //if allowed ends
+    else{
+      echo "<script>alert('Invalid File Format!!!');</script>";
+    }
    
-  }
+    
 
 
 
+
+  } //is fsubmit ends
+  
 
 
 
@@ -165,8 +199,9 @@
         </div>
 
         <div class="buttons">
-            <button type="submit" name="submit">Register</button>
-            <button type="reset" id="clearButton" name="clearButton" onclick="resetFormFields()" class="btn btn-secondary">Clear</button>
+            <button type="submit" id="fsubmit" name="fsubmit">Register</button>
+            <button type="submit" id="msubmit" name="submit" style="display:none;">Register</button>
+            <button type="reset" id="clearButton" name="clearButton" onclick="resetFormFields()" class="btn btn-secondary" style="display:none;">Clear</button>
         </div>
     </form>
 </div>
@@ -225,7 +260,7 @@
 // Retrieve student information from the database
 $query =  "SELECT DISTINCT student.studentID, student.studentName, student.studentEmail,
  student.studentpassword, course.courseName FROM student JOIN enrollment ON enrollment.studentID = student.studentID 
- JOIN subject ON subject.subjectID = enrollment.subjectID JOIN course ON course.courseID = subject.courseID";
+ JOIN `subject` ON `subject`.subjectID = enrollment.subjectID JOIN course ON course.courseID = `subject`.courseID";
 
 $result = $conn->query($query);
 $num = $result->num_rows;
@@ -233,7 +268,7 @@ $num = $result->num_rows;
 // Check if any results were returned
 if($num > 0) {
     // Display the table header
-    echo "<table><tr><th>Student ID</th><th>Student Name</th><th>Student Email</th><th>Password</th><th>Course</th></tr>";
+    echo "<table><tr><th>Roll Number</th><th>Student Name</th><th>Student Email</th><th>Password</th><th>Course</th></tr>";
     
     // Loop through each row of data and display it in the table
     while($row = $result->fetch_assoc()) {
@@ -299,6 +334,9 @@ mysqli_close($conn);
 <script>
 const fileRegistrationRadio = document.getElementById('file_registration');
 const manualRegistrationRadio = document.getElementById('manual_registration');
+const msubmitButton = document.getElementById('msubmit');
+const mclearButton = document.getElementById('clearButton');
+const fsubmitButton = document.getElementById('fsubmit');
 
 const fileRegistrationDiv = document.querySelector('.file_registration');
 const manualRegistrationDiv = document.querySelector('.manual_registration');
@@ -306,11 +344,16 @@ const manualRegistrationDiv = document.querySelector('.manual_registration');
 fileRegistrationRadio.addEventListener('click', () => {
   fileRegistrationDiv.style.display = 'block';
   manualRegistrationDiv.style.display = 'none';
+  msubmitButton.style.display = 'none';
+  mclearButton.style.display = 'none';
 });
 
 manualRegistrationRadio.addEventListener('click', () => {
   manualRegistrationDiv.style.display = 'block';
   fileRegistrationDiv.style.display = 'none';
+  msubmitButton.style.display = 'inline-block';
+  mclearButton.style.display = 'inline-block';
+  fsubmitButton.style.display = 'none';
 });
 
 
