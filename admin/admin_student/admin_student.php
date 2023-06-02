@@ -25,8 +25,7 @@
       }
       else{
   
-      // $query=mysqli_query($conn,"insert into tblstudents(firstName,lastName,otherName,admissionNumber,password,classId,classArmId,dateCreated) 
-      // value('$firstName','$lastName','$otherName','$admissionNumber','12345','$classId','$classArmId','$dateCreated')");
+     
       
       $query_st=mysqli_query($conn,"INSERT INTO student(studentID, studentName, studentEmail, studentpassword) 
       VALUES('$studentID', '$studentName', '$studentEmail', '$studentpassword')");
@@ -63,7 +62,7 @@
       $inputFileNamePath = $_FILES['excel_file']['tmp_name'];
 
       $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFileNamePath);
-      //$spreadsheet = IOFactory::createReader($inputFileNamePath);
+     
 
       $data= $spreadsheet->getActiveSheet()->toArray();
 
@@ -296,42 +295,6 @@ mysqli_close($conn);
 
 
 
-<!-- Student Table Display starts -->
-<!-- <table>
-  <caption>STUDENTS</caption>
-  <thead>
-    <tr>
-      <th>Roll No.</th>
-      <th>Student Name</th>
-      <th>Student Email</th>
-      <th>Password</th>
-      <th>Course</th>
-    </tr>
-  </thead>
-  <tbody>
-     <?php
-      // Retrieve student information from the database
-    //   $query =  "SELECT DISTINCT student.studentID, student.studentName, student.studentEmail,
-    //   student.studentpassword, course.courseName FROM student JOIN enrollment ON enrollment.studentID = student.studentID 
-    //   JOIN subject ON subject.subjectID = enrollment.subjectID JOIN course ON course.courseID = subject.courseID";
-
-    //   $result = $conn->query($query);
-    //   $num = $result->num_rows;
-
-    //   while($row = $result->fetch_assoc()) {
-    //     echo "<tr>";
-    //     echo "<td>" . $row['studentID'] . "</td>";
-    //     echo "<td>" . $row['studentName'] . "</td>";
-    //     echo "<td>" . $row['studentEmail'] . "</td>";
-    //     echo "<td>" . $row['studentpassword'] . "</td>";
-    //     echo "<td>" . $row['course'] . "</td>";
-    //     echo "</tr>";
-    //   }
-    // ?> 
-  </tbody>
-</table> -->
-    
-<!-- Student Table Display ends -->
 
 
 
