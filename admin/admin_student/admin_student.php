@@ -219,46 +219,6 @@
 
 
 
-
-
-
-
-
-
-
-
-<!-- Student Registration Form starts -->
-<!-- <div class="container">
-	<h2>Student Registration</h2>
-	<form action="" method="POST">
-		<label for="name">Name:</label>
-		<input type="text" id="name" name="name" placeholder="Enter Name">
-
-		<label for="roll_number">Roll Number:</label>
-		<input type="text" id="roll_number" name="roll_number" placeholder="Enter Roll Number">
-
-		<label for="email">Email:</label>
-		<input type="text" id="email" name="email" placeholder="Enter Email Address">
-
-		<label for="course">Course ID:</label>
-		<input type="text" id="course" name="course" placeholder="Enter Course ID">
-
-    <label for="password">Password:</label>
-		<input type="text" maxlength="50" id="password" name="password" required placeholder="Enter Password">
-
-    <div class="buttons">
-
-			<button type="submit" name="submit">Register</button>
-      <button type="reset" id="clearButton" name="clearButton" onclick="resetFormFields()" class="btn btn-secondary">Clear</button>
-    </div>
-	</form>
-</div> -->
-
-
-
-<!-- Student Registration Form ends -->
-
-
 <!-- Student Table Display starts -->
 <?php
 // Retrieve student information from the database
