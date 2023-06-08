@@ -177,7 +177,10 @@
             <label for="file_registration">File Registration</label>
         </div>
         <div class="file_registration">
-            <label for="excel_file">Upload Excel:</label>
+            <label>Download Template:</label>
+            <a href="../../download/studentsample.xlsx" download><button id="templatebtn" type="button">Download</button></a>
+            <br><br>
+            <label for="excel_file">Upload Excel File:</label>
             <input type="file" id="excel_file" name="excel_file">
         </div>
 

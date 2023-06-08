@@ -171,6 +171,11 @@ input[type=submit]:hover {
 .file_registration{
   margin-bottom: 10px;
 }
+
+.file_registration #templatebtn{
+  padding: 2px;
+}
+
 .buttons {
   text-align: center;
   margin-top: 15px;

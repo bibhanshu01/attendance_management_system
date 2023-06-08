@@ -6,7 +6,8 @@
    // Code to get the details of selected subject and fill the form fields
    if(isset($_POST['edit'])) {
     $id = $_POST['id'];
-    $sql = "SELECT * FROM `subject` WHERE courseID = '$id'";
+    //$sql = "SELECT * FROM `subject` WHERE courseID = '$id'";
+    $sql = "SELECT * FROM `subject` WHERE subjectID = '$id'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
   }
