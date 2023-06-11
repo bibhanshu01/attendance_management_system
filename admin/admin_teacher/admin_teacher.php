@@ -4,7 +4,7 @@
   include '../../connection/_session.php';
 
    // Code to get the details of selected teacher and fill the form fields
-   if(isset($_POST['edit'])) {
+   if(isset($_POST['editteacher'])) {
     $id = $_POST['id'];
     $sql = "SELECT * FROM teacher WHERE teacherID = '$id'";
     $result = mysqli_query($conn, $sql);
@@ -57,26 +57,6 @@
 </div>
 
 <!-- Nav Radio Container ends -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -260,13 +240,13 @@
 								<td class="action-btns">
 									<form action="" method="POST">
 										<input type="hidden" name="id" value="<?php echo $row['teacherID']; ?>">
-										<button type="submit" name="edit">Edit</button>
+										<button type="submit" id="editteacher" name="editteacher">Edit</button>
 									</form>
 								</td>
 								<td class="action-btns">
 									<form action="" method="POST">
 										<input type="hidden" name="id" value="<?php echo $row['teacherID']; ?>">
-										<button type="submit" name="deleteteacher">Delete</button>
+										<button type="submit" id="deleteteacher" name="deleteteacher">Delete</button>
 									</form>
 								</td>
 							</tr>
@@ -329,7 +309,7 @@
 <!-- Subject Assignment ends(ShowDate) -->
 
 
-<!-- Attendance Display Form starts -->
+<!-- Subject Teacher Display Form starts -->
 <div class="attendance_container" id="attendance-form" style="display: none;">
 <div class="teacher_container">
 		<h2>Teacher-Subject Assignment</h2>
@@ -461,30 +441,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/js/font-awesome.min.js"></script>
 
 
@@ -524,6 +480,11 @@ const dateRadio = document.querySelector('input[value="date"]');
 const attendanceContainer = document.getElementById('date-form');
 const assignmentContainer = document.getElementById('attendance-form');
 
+const editbutton = document.getElementById('editteacher');
+const deletebutton = document.getElementById('deleteteacher');
+const teachercontainer = document.getElementById('subject-form');
+
+
 // Listen for click events on the radio buttons
 subjectRadio.addEventListener('click', () => {
   // Hide the attendance container
@@ -536,6 +497,14 @@ dateRadio.addEventListener('click', () => {
   attendanceContainer.style.display = 'block';
   assignmentContainer.style.display = 'block';
 });
+
+editbutton.addEventListener('click', () => {
+	teachercontainer.style.display = 'block';
+});
+deletebutton.addEventListener('click', () => {
+	teachercontainer.style.display = 'block';
+});
+
 </script>
 
 
