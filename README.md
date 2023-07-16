@@ -28,7 +28,7 @@ For the feature of uploading data through excel files in a new project:
 -> Download and install composer from this link: https://getcomposer.org/Composer-Setup.exe  
 
 ->Run and Install the downlaod exe file with default settings  
-->Now open command prompt and move to the project directory(in which you want to add this feature(use cd "yourdirectorypath" to mvoe))   
+->Now open command prompt and move to the project directory(in which you want to add this feature(use cd "yourdirectorypath" to move))   
 ->Now Use composer to install PhpSpreadsheet into your project:  
 
     composer require phpoffice/phpspreadsheet  
