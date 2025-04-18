@@ -2,7 +2,7 @@
 Attendance Management System for College  
 
 To Run this Project: 
-1-> Downlaod this Project  
+1-> Download this Project  
 2-> Move it to this location: C:\xampp\htdocs  (i.e. in the htdocs directory of xampp)  
 3-> Open this project directory and open database sub-directory  
 4-> Copy the database name : database_name.sql  (here name is: finaltest)  
